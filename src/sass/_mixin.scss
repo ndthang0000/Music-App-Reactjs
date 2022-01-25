@@ -1,0 +1,19 @@
+@use './variable' as *;
+
+@mixin flexContent($justify:center,$align:center) {
+    display: flex;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin mobile {
+    @media only screen and (max-width: 740px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: 1024px) {
+        @content;
+    }
+}
