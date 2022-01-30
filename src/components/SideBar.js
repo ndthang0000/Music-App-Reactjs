@@ -1,16 +1,20 @@
 import React from 'react';
 import { BiHomeCircle,BiMusic,BiUser,BiSearch,BiLike,BiSlideshow } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 function SideBar(props) {
+    console.log('Sidebar re-render')
     return (
         <div className='side-bar-menu'>
             <div className="side-bar-menu-logo">
                 <img src="/logo.png" alt=""/>
             </div>
             <div className="side-bar-menu-list">
-                <div className="side-bar-menu-item">
-                    <BiHomeCircle/>
-                    <span>Trang chủ</span>
-                </div>
+                <Link to='/'>
+                    <div className="side-bar-menu-item">
+                        <BiHomeCircle/>
+                        <span>Trang chủ</span>
+                    </div>
+                </Link>
                 <div className="side-bar-menu-item">
                     <BiUser/>
                     <span>Cá Nhân</span>

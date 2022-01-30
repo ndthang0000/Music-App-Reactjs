@@ -7,9 +7,33 @@
 *{
     padding: 0;
     margin: 0;
+    word-spacing:-3px
 }
-html{
-    font-size: 16px;
+.text-error{
+    color: rgb(221, 30, 30);
+}
+.text-success{
+    color: #2ecc71 !important;
+}
+.text-white{
+    color: rgb(252, 252, 252);
+}
+.text-bold{
+    font-weight: 600;
+}
+.text-white-sub{
+    color: rgb(207, 207, 207);
+}
+.flex{
+    display: flex;
+}
+.toast-upload{
+    font-size: 18px;
+    padding: 15px;
+    img{
+        width: 70px;
+        height: auto;
+    }
 }
 body{
     font-family: 'Lato', sans-serif;
@@ -20,6 +44,7 @@ body{
     left: 0;
     height: 100%;
     width: 100%;
+    font-size: inherit;
 }
 
 .box-shadow-navbar{
@@ -31,11 +56,13 @@ body{
     position: fixed;
     top: 0;
     bottom: 0;
+    left: 0;
     width: $widthSideBar;
     background-color: rgba(254, 250, 252, 0.15);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    @include mobile{
-        width: $widthSideBarMobile;
+    transition: 0.2s;
+    @include tablet{
+        left: -250px;
     }
     &-logo{
         padding-left: 25px;
@@ -56,6 +83,9 @@ body{
         display: flex;
         align-items: center;
         transition: all cubic-bezier(0.215, 0.610, 0.355, 1) 0.15s;
+        @include mobile{
+            padding: 8px 25px;
+        }
         span{
             margin-left: 12px;
             font-size: 16px;
@@ -98,7 +128,7 @@ body{
     }
     &-vip{
         position: absolute;
-        bottom: 100px;
+        bottom: 110px;
         width: 80%;
         left: 10%;
         text-align: center;
@@ -112,44 +142,40 @@ body{
             padding: 8px;
             color: $white;
         }
-        
-        .btn-upgrade {background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC  51%, #02AAB0  100%)}
-        .btn-upgrade {
-            margin: 10px;
-            padding: 8px 10px;
-            text-align: center;
-            text-transform: uppercase;
-            transition: 0.5s;
-            background-size: 200% auto;
-            color: white;            
-            border-radius: 25px;
-            display: block;
-            cursor: pointer;
-        }
-
-            .btn-upgrade:hover {
-            background-position: right center; /* change the direction of the change here */
-            color: #fff;
-            text-decoration: none;
-        }
-        
     }
 }
-
+.visible-sidebar{
+    left: 0;
+    z-index: 6565;
+    background-color: rgba(0,0,0,0.8);
+}
 .nav-bar-menu{
     position: fixed;
     left: $widthSideBar;
     right: 0;
     height: $heightSideBar;
     z-index: 2;
+    .menu-icon{
+        display: none;
+        font-size: 35px;
+        color: white;
+        margin-left: 15px;
+        cursor: pointer;
+        @include tablet{
+            display: block
+        }
+    }
     @include flexContent(space-between,center);
-    @include mobile(){
-        left: $widthSideBarMobile;
+    @include tablet(){
+        left: 0;
     }
     &-search{
         flex-basis: 40%;
         margin-left: 50px;
         position: relative;
+        @include mobile{
+            display: none;
+        }
         input{
             width: 100%;
             height: 35px;
@@ -163,13 +189,13 @@ body{
             padding-right: 0px;
             &::placeholder{
                 color: rgb(209, 207, 207);
-                font-size: 18px;
+                font-size: 14px;
             }
         }
         .search-icon{
             position: absolute;
             top: 50%;
-            right: 0;
+            right: 8px;
             transform: translateY(-50%);
             color: $white;
             font-size: 25px;
@@ -185,6 +211,9 @@ body{
         display: flex;
         margin-right: 50px;
         justify-content: flex-end;
+        @include mobile{
+            margin-right: 10px;
+        }
         &-item{
             width: 50px;
             height: 50px;
@@ -209,20 +238,37 @@ body{
     right:0;
     padding: 45px;
     z-index: 1;
-    bottom: 0;
+    bottom: $heightPlayMusic;
     overflow-y: scroll;
-    @include mobile(){
-        left: $widthSideBarMobile;
+    @include tablet(){
+        left: 0;
+        padding: 15px;
     }
+    @include mobile(){
+        padding: 5px;
+    }
+    &::-webkit-scrollbar{
+        width: 8px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color:$white-alpha-30;
+        border-radius: 10px;
+    }
+
 }
 .list-song{
     margin: 15px;
     color: white;
     display: flex;
     flex-direction: column;
+    @include mobile{
+        margin-left: 0;
+        margin-right:0;
+    }
     &-item{
         @include flexContent();
         justify-content: space-between;
+
     }
     &-item{
         padding: 3px 20px;
@@ -234,6 +280,9 @@ body{
         &.active{
             background-color: $white-alpha;
         }
+        @include mobile{
+            padding: 3px 10px;
+        }
     }
     .song-item-img{
         display: flex;
@@ -241,7 +290,7 @@ body{
         align-items: center;
         .index{
             font-weight: 900;
-            font-size: 56px;
+            font-size: 3rem;
             color: rgba(255, 255, 255, 0.0);
             user-select: none;
             -webkit-text-stroke-width: 0.2px;
@@ -253,8 +302,8 @@ body{
             height: 50px;
             overflow: hidden;
             @include flexContent();
-            margin-right: 15px;
-            margin-left: 45px;
+            margin-right: 1rem;
+            margin-left: 1.5rem;
             border-radius: 5px;
             font-size: 16px;
             position: relative;
@@ -288,19 +337,42 @@ body{
     .name{
         color: rgb(238, 221, 221);
         flex: 30%;
+        @include mobile{
+            display: none;
+        }
     }
     .song-item-control{
         display: flex;
         justify-content: flex-end;
         flex: 20%;
         font-size: 18px;
+        align-items: center;
         cursor: pointer;
+        .view{
+            @include flexContent();
+            font-size: 14px;
+            font-style: italic;
+            font-weight: 300;
+            color: rgb(226, 213, 213);
+            margin-right: 9px;
+            .iconn{
+                font-size: 1.6rem;
+                color:white;
+                margin-right: 2px;
+            }
+            @include tablet(){
+                flex-direction: column;
+                align-items: center;
+                justify-content: center
+            }
+        }
         .icon{
             @include flexContent();
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background-color: $white-alpha;
+            flex-shrink: 0;
         }
     }
 }
@@ -316,29 +388,29 @@ body{
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
     .song-item-img{
         display: flex;
-        flex: 50%;
         flex: 30%;
         align-items: center;
-        .index{
-            font-weight: 900;
-            font-size: 56px;
-            color: rgba(255, 255, 255, 0.0);
-            user-select: none;
-            -webkit-text-stroke-width: 0.2px;
-            -webkit-text-stroke-color: rgb(212, 24, 24);
-            font-family: 'Roboto Mono', monospace;;
+        @include mobile(){
+            flex: 20% !important;
         }
         &-area{
             width: 60px;
             height: 60px;
             overflow: hidden;
             @include flexContent();
-            margin-right: 15px;
-            margin-left: 45px;
+            margin-right: 1rem;
+            margin-left: 2rem;
             border-radius: 5px;
             font-size: 16px;
             position: relative;
+            @include mobile(){
+                width: 35px;
+                height: 35px;
+                margin-right: 10px;
+                margin-left: 0.5rem;
+            }
             img{
+                flex-shrink: 0;
                 width: 100%;
             }
             .play-btn{
@@ -356,6 +428,9 @@ body{
             }
         }
         .song-item-infor{
+            @include mobile{
+                display: none;
+            }
             .song-item-infor-name{
                 font-weight: 600;
                 color: white;
@@ -378,7 +453,16 @@ body{
             gap: 30px;
         }
         .icon-btn{
+            font-size: 2rem;
+            padding: 5px;
             cursor: pointer;
+            border-radius: 50%;
+            &:hover{
+                background-color: $white-alpha;
+            }
+            &.active{
+                background-color: $white-alpha-30;
+            }
         }
         &-top{
             margin-top: 25px;
@@ -459,16 +543,236 @@ body{
             position: absolute;
             top: -5px;
             right: 0;
-            font-size: 14px;
+            font-size: 1rem;
             user-select: none;
         }
     }
     .controller-right{
         flex: 30%;
+        margin-left: 45px;
+        margin-right: 45px;
+        @include flexContent();
+        justify-content: flex-end;
+        position: relative;
+        @include tablet{
+            margin-left: 15px !important;
+            margin-right: 15px;
+        }
+        @include mobile{
+            flex:20%;
+            justify-content: center;
+            margin-left: 0 !important;
+            margin-right: 0;
+        }
+        .volumn-slider{
+            position: absolute ;
+            top: -70%;
+            right:8px;
+            color:white;
+            &.none{
+                display: none;
+            }
+        }
+        .view{
+            color: rgb(216, 198, 198);
+            font-size: 14px;
+            font-style: italic;
+            margin-right: 20px;
+            @include mobile{
+                display: none;
+            }
+        }
+        .icon-btn{
+            cursor: pointer;
+            font-size: 2.5rem;
+            margin: 5px;
+            color: white;
+            padding: 5px;
+            border-radius: 50%;
+            &:hover{
+                background-color: $white-alpha;
+            }
+            &.down{
+                width: 36px;
+                height: 36px;
+                padding: 10px
+            }
+            &.active{
+                background-color: rgba(254, 204, 230, 0.8);
+            }
+        }
+        .btn-download{
+            background-color: #0093E9;
+            background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 15px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            color: white;
+            width: fit-content;
+            @include mobile{
+                display: none;
+            }
+            a{
+                color: white;
+                text-decoration: none;
+                &:hover{
+                    color:#eeeeee
+                }
+            }
+        }
+
     }
 }
-.cover-layer{
-    position: absolute;
-    background-color: rgb(245, 25, 25);
-    z-index: 11;
+.upload-song,.upload-image{
+    @include flexContent();
+    margin-bottom: 20px;
+}
+.file-area{
+    @include flexContent();
+    width: 150px;
+    height: 150px;
+    border: 5px dashed $green;
+    position: relative;
+    color:$green;
+    margin-right: 20px;
+    flex-basis: 40%;
+    input{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+.file-infor{
+    span{
+        color: rgb(247, 247, 247);
+    }
+}
+.form-group{
+    margin-bottom: 20px;
+    label{
+        margin-left: 15px;
+        margin-bottom: 3px;
+        font-size: 18px;
+    }
+    input{
+        background-color: $white-alpha-30;
+        border: none;
+        outline: none;
+        padding: 6px 15px;
+        border-radius: 10px;
+        color: $white;
+        width: 100%;
+    }
+    .text-white{
+        font-size: 18px;
+    }
+    .radio{
+        margin-left: 25px;
+        display: flex;
+        color: $white;
+        align-items: center;
+        label{
+            flex: 1;
+        }
+        input{
+            flex: 2;
+            justify-self: flex-start;
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+.btn-upload {background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA  51%, #77A1D3  100%)}
+.btn-upload {
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 10px #eee;
+    border-radius: 10px;
+    display: block;
+    cursor: pointer;
+    width: fit-content;
+    outline: none;
+    border:none
+}
+.btn-upload:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+.btn-upgrade {background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC  51%, #02AAB0  100%)}
+.btn-upgrade {
+    margin: 10px;
+    padding: 8px 10px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    border-radius: 25px;
+    display: block;
+    cursor: pointer;
+    &.logout{
+        @include flexContent();
+        padding: 3px 20px;
+        font-size: 14px;
+        background-image: none;
+        background-color: $white-alpha-30 !important;
+    }
+}
+.btn-upgrade:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+.review-image{
+    @include flexContent();
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+}
+.me-content{
+    position: relative;
+    .avatar-area{
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        @include mobile{
+            margin-top: 80px;
+        }
+    }
+    .name{
+        color: white;
+        font-weight: 600;
+    }
+    &-control{
+        position: absolute;
+        top: 0px;
+        right: 0;
+        display: flex;
+    }
+}
+@media (max-width:1024px){
+    html{
+        font-size: 15px;
+
+    }
+}
+@media (max-width:1024px){
+    html{
+        font-size: 13px;
+
+    }
 }

@@ -1,12 +1,11 @@
-import music from '../music'
 
 const initState={
-    music,
-    active:0,
-    currentSong:music[0]
+    music:[], // play List
+    active:0, // index of play List
+    currentSong:null // current Song
 }
 
-const rootReducer=(state=initState,action)=>{
+const playMusic=(state=initState,action)=>{
     switch(action.type){
         case 'NEXT_SONG':
             return {
@@ -25,9 +24,15 @@ const rootReducer=(state=initState,action)=>{
                 ...state,
                 active:parseInt(action.payload),
             }
+        case 'SET_LIST_SONG': // top 100 song popular
+            return {
+                music:action.payload.playList,
+                active:action.payload.index||0,
+                currentSong:action.payload.playList[action.payload.index]||action.payload.playList[0]
+            }
         default:
             return state
     }
 }
 
-export default rootReducer
+export default playMusic

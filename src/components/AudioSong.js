@@ -1,5 +1,4 @@
 import { forwardRef, useEffect,useState,useRef } from "react";
-import { useDispatch } from "react-redux";
 
 const formatTime=(e)=>{
     return `${Math.round(e/60-0.5)}:${Math.round(e%60)<10?'0'+Math.round(e%60):Math.round(e%60)}`
@@ -9,18 +8,19 @@ const clearTimer=(id)=>{
         clearInterval(id)
     }
 }
-function AudioSong({currentSong, isPlaying},ref) {
+function AudioSong({currentSong, isPlaying,handleEndedSong},ref) {
     const timeEl=useRef(null)
     const [time,setTime]=useState(0)
-    const dispath=useDispatch()
-
     useEffect(()=>{
         if(isPlaying){
             timeEl.current=setInterval(()=>{
-                setTime(((ref.current.currentTime/ref.current.duration)*100))
+                setTime(((ref.current.currentTime/ref.current.duration)*100)||0)
             },1000)
         }
         else{
+            clearTimer(timeEl.current)
+        }
+        return ()=>{
             clearTimer(timeEl.current)
         }
     },[isPlaying])
@@ -31,7 +31,7 @@ function AudioSong({currentSong, isPlaying},ref) {
     
     useEffect(()=>{
         ref.current.addEventListener('ended',(e)=>{
-
+            handleEndedSong()
         })
     },[])
     const handleChangeInputRange=(e)=>{
@@ -40,10 +40,10 @@ function AudioSong({currentSong, isPlaying},ref) {
     }
     return (
         <>
-            <audio ref={ref} src={currentSong.link} autoPlay={isPlaying}></audio>
+            <audio ref={ref} src={'http://localhost:5500'+currentSong?.source} autoPlay={isPlaying}></audio>
             <span className='current-time'>{ref.current?formatTime(ref.current?.currentTime):'00:00'}</span>
-            <input type="range" min={0} max={100} step={1} className='range-input' onChange={handleChangeInputRange} value={time}/>
-            <span className='total-time'>{formatTime(300)}</span>
+            <input type="range" min={0} max={100} step={0.5} className='range-input' onChange={handleChangeInputRange} value={time}/>
+            <span className='total-time'>{formatTime(currentSong?.duration)}</span>
         </>
     );
 }

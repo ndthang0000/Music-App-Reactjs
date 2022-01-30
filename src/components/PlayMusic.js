@@ -1,22 +1,26 @@
-import React,{forwardRef,useEffect,useRef,useState} from 'react';
+import React,{memo,useEffect,useRef,useState} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { AiFillAndroid, 
         AiFillBackward, 
         AiFillPlayCircle,
         AiFillForward, 
-        AiFillDribbbleCircle,
+        AiOutlineRetweet,
         AiFillPauseCircle } from "react-icons/ai";
 import AudioSong from './AudioSong';
-import {nextSong, preSong} from '../redux/action'
+import Volumn from './Volumn';
+import {getListSong,getPlayListSong} from '../api/songApi';
+import {setList,nextSong, preSong} from '../redux/action/playMusic'
 
 
-function PlayMusic(props,ref) {
+
+function PlayMusic(props) {
     const songRef=useRef(null)
     const [isPlaying,setIsPlaying]=useState(false)
     const dispath=useDispatch()
-    console.log('re-render')
-    const music=useSelector(state=>state.music) // array
-    const indexCurrentSong=useSelector(state=>state.active)  // index of array
+    console.log('re-render PlayMusic')
+
+    const music=useSelector(state=>state.playMusic.music) // array
+    const indexCurrentSong=useSelector(state=>state.playMusic.active)  // index of array
     const currentSong =music[indexCurrentSong]     // current song
     const handlePlayPauseSong=()=>{
         if(isPlaying){
@@ -27,7 +31,6 @@ function PlayMusic(props,ref) {
         }
         setIsPlaying(!isPlaying)
     }
-    
     const handlePreviosSong=(e)=>{
         dispath(preSong())
         setIsPlaying(true)
@@ -37,16 +40,61 @@ function PlayMusic(props,ref) {
         dispath(nextSong())
         setIsPlaying(true)
     }
+    const handleEndedSong=()=>{
+        dispath(nextSong())
+        setIsPlaying(true)
+    }
+    useEffect(async()=>{
+        if(music.length===0){
+            let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+            if(!playMusic){
+                const data=await getListSong()
+                let newPlayMusic={
+                    volume:1,   // volume
+                    currentSong:0, // currentSong
+                    playList:'',     // '' is top 100 else is playList
+                }
+                localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
+                dispath(setList({playList:data,index:0}))
+            }
+            else{
+                if(!playMusic.playList){
+                    const data=await getListSong()
+                    dispath(setList({playList:data,index:playMusic.currentSong}))
+                }
+                else{
+                    const data=await getPlayListSong(playMusic.playList)
+                    if(data){
+                        dispath(setList({playList:data,index:playMusic.currentSong}))
+                    }
+                    else{
+                        const newData=await getListSong()
+                        dispath(setList({playList:newData,index:playMusic.currentSong}))
+                    }
+                }
+            }
+        }
+    },[])
+    useEffect(()=>{
+        let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+        if(playMusic){
+            let newPlayMusic={
+                ...playMusic,
+                currentSong:indexCurrentSong
+            }
+            localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
+        }
+    },[currentSong])
     return (
         <>
-            <div className='play-music' ref={ref}>
+            <div className='play-music'>
                 <div className="song-item-img">
                     <div className='song-item-img-area'>
-                        <img src={currentSong.image} alt='' />
+                        <img src={'http://localhost:5500'+currentSong?.avatar} alt='' />
                     </div>
                     <div className="song-item-infor">
-                        <div className='song-item-infor-name'>{currentSong.name}</div>
-                        <div className='song-item-infor-singer'>{currentSong.singer}</div>
+                        <div className='song-item-infor-name'>{currentSong?.name}</div>
+                        <div className='song-item-infor-singer'>{currentSong?.singer}</div>
                     </div>
                 </div>
                 <div className='controller-mid'>
@@ -61,15 +109,23 @@ function PlayMusic(props,ref) {
                             </div>
                         </div>
                         <AiFillForward className='icon-btn' onClick={handleNextSong}/>
-                        <AiFillDribbbleCircle className='icon-btn'/>
+                        <AiOutlineRetweet className='icon-btn active' title='Phát tuần tự'/>
                     </div>
                     <div className='controller-mid-input'>
-                        <AudioSong ref={songRef} currentSong={currentSong} isPlaying={isPlaying} />
+                        <AudioSong 
+                            ref={songRef} 
+                            currentSong={currentSong} 
+                            isPlaying={isPlaying} 
+                            handleEndedSong={handleEndedSong}
+                        />
                     </div>
                 </div>
                 <div className='controller-right'>
-                    <div className='icon'>
-                    </div>
+                    <Volumn 
+                        songRef={songRef} 
+                        source={'http://localhost:5500'+currentSong?.source}
+                        name={currentSong?.name}
+                    />
                 </div>
             </div>
         </>
@@ -77,4 +133,4 @@ function PlayMusic(props,ref) {
     );
 }
 
-export default forwardRef(PlayMusic);
+export default memo(PlayMusic);

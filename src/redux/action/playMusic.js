@@ -25,3 +25,10 @@ export const playAnySong=(data=null)=>{
         payload:data
     }
 }
+
+export const setList=(data=null)=>{
+    return {
+        type:'SET_LIST_SONG',
+        payload:data
+    }
+}

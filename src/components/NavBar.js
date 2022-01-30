@@ -1,17 +1,29 @@
-import React, { useEffect, useState,forwardRef, useRef } from 'react';
-import { BiCloudUpload, BiCog, BiSearchAlt2 } from "react-icons/bi";
+import React, { useEffect, useState,forwardRef, useRef, memo } from 'react';
+import { useSelector } from 'react-redux';
+import { BiCloudUpload, BiCog, BiSearchAlt2, } from "react-icons/bi";
+import { BsList } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import {userInfor} from '../redux/selector/userInfor'
 import theme from '../theme';
 
-function NavBar({playMusicRef},ref) {
+
+function NavBar(props,ref) {
     const themeLocaltorage=localStorage.getItem('activeTheme')
     const [activeTheme,setActiveTheme]=useState(parseInt(themeLocaltorage)||0)
+
+
+    const userInfo=useSelector(userInfor)
+    console.log(userInfo)
+
+
     const bodyRef=useRef(document.querySelector('body'))
-    console.log(' re render')
+    console.log('Navbar re-render')
     useEffect(()=>{
-        playMusicRef.current.style.backgroundImage=`url(${theme[activeTheme].playMusic})`
+        document.querySelector('.play-music').style.backgroundImage=`url(${theme[activeTheme].playMusic})`
         bodyRef.current.style.backgroundImage=`url(${theme[activeTheme].url})`
         localStorage.setItem('activeTheme',activeTheme)
     },[activeTheme])
+
     const handleChangeTheme=()=>{
         if(activeTheme===theme.length-1){
             setActiveTheme(0)
@@ -20,28 +32,50 @@ function NavBar({playMusicRef},ref) {
             setActiveTheme(activeTheme+1)
         }
     }
+    const handleToggleSideBar=()=>{
+        document.querySelector('.side-bar-menu').classList.add('visible-sidebar')
+    }
+    useEffect(()=>{
+        const handleSidebar=(e)=>{
+            let targetEl=e.target.closest('.side-bar-menu')
+            let menuEl=e.target.closest('.menu-icon')
+            console.log(menuEl)
+            if(menuEl){
+                return
+            }
+            if(!targetEl){
+                document.querySelector('.side-bar-menu').classList.remove('visible-sidebar')
+            }
+        }
+        window.addEventListener('click',handleSidebar)
+    },[])
     return (
         <div className='nav-bar-menu' ref={ref}>
+            <div className='menu-icon' onClick={handleToggleSideBar}>
+                <BsList/>
+            </div>
             <div className='nav-bar-menu-search'>
-                <input type="text" name='search' placeholder='Nhập tên bài hát, nghệ sĩ, hoặc thể loại nhạc...'/>
+                <input type="text" name='search' placeholder='Nhập tên bài hát, nghệ sĩ...'/>
                 <BiSearchAlt2 className='search-icon'/>    
             </div>
             <div className='nav-bar-menu-sub'>
                 <div className='nav-bar-menu-sub-item' onClick={handleChangeTheme}>
                     <img src="/img/newyear.png" alt="" />
                 </div>
-                <div className='nav-bar-menu-sub-item'>
-                    <BiCloudUpload/>
-                </div>
+                <Link to='/song/upload' style={{color:'white'}}>
+                    <div className='nav-bar-menu-sub-item'>
+                        <BiCloudUpload/>
+                    </div>
+                </Link>
                 <div className='nav-bar-menu-sub-item'>
                     <BiCog/>
                 </div>
-                <div className='nav-bar-menu-sub-item avatar'>
-                    <img src="/user-default.png" alt="" />
-                </div>
+                <Link to={userInfo?'/me':'/login'} className='nav-bar-menu-sub-item avatar'>
+                    <img src={userInfo?userInfo.photoURL:"/user-default.png"} alt="" />
+                </Link>
             </div>
         </div>
     );
 }
 
-export default forwardRef(NavBar);
+export default memo(forwardRef(NavBar));

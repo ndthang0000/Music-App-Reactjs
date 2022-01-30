@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { AiOutlineMore } from "react-icons/ai";
-import { BsFillCollectionPlayFill } from "react-icons/bs";
+import { BsFillCollectionPlayFill,BsHeadphones } from "react-icons/bs";
 import color from '../color'
 
-function SongItem({image,singer,name,index,changeSong,isActive}) {
+function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
     const listSongRef=useRef(null)
     useEffect(()=>{
         listSongRef.current.addEventListener('mouseover',(e)=>{
@@ -15,8 +15,8 @@ function SongItem({image,singer,name,index,changeSong,isActive}) {
             listSongRef.current.querySelector('.play-btn').style.visibility='hidden'
         })
         return ()=>{
-            listSongRef.current.removeEventListener('mouseout')
-            listSongRef.current.removeEventListener('mouseover')
+            //listSongRef.current.removeEventListener('mouseout')
+            //listSongRef.current.removeEventListener('mouseover')
         }
     },[])
     return (
@@ -30,18 +30,22 @@ function SongItem({image,singer,name,index,changeSong,isActive}) {
                     {index+1}
                 </div>
                 <div className='song-item-img-area'>
-                    <img src={image} alt='' />
+                    <img src={'http://localhost:5500'+avatar} alt='' />
                     <BsFillCollectionPlayFill className='play-btn' onClick={changeSong}/>
                 </div>
                 <div className="song-item-infor">
                     <div className='song-item-infor-name'>{name}</div>
-                    <div className='song-item-infor-singer'>{singer}</div>
+                    <div className='song-item-infor-singer'>{singerName}</div>
                 </div>
             </div>
             <div className='name'>
                 {name}
             </div>
             <div className='song-item-control'>
+                <div className='view'>
+                    <BsHeadphones className='iconn'/>
+                    <span>354 views</span>
+                </div>
                 <div className='icon'>
                     <AiOutlineMore/>
                 </div>
