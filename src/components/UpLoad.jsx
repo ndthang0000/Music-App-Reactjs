@@ -7,6 +7,7 @@ import FileImageInfor from '../components/FileImageInfor'
 import { useForm } from "react-hook-form";
 import {upload} from '../api/songApi'
 import "toastify-js/src/toastify.css"
+import env from "react-dotenv";
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -71,7 +72,7 @@ function UpLoad(props) {
                 gravity: "bottom", // `top` or `bottom`
                 position: "right", // `left`, `center` or `right`
                 stopOnFocus: true, // Prevents dismissing of toast on hover
-                avatar:'http://localhost:5500'+res.song.avatar,
+                avatar:env.API_URL+res.song.avatar,
                 style: {
                     background: "linear-gradient(to right, #00b09b, #96c93d)",
                 }

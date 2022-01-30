@@ -10,7 +10,7 @@ import AudioSong from './AudioSong';
 import Volumn from './Volumn';
 import {getListSong,getPlayListSong} from '../api/songApi';
 import {setList,nextSong, preSong} from '../redux/action/playMusic'
-
+import env from "react-dotenv";
 
 
 function PlayMusic(props) {
@@ -90,7 +90,7 @@ function PlayMusic(props) {
             <div className='play-music'>
                 <div className="song-item-img">
                     <div className='song-item-img-area'>
-                        <img src={'http://localhost:5500'+currentSong?.avatar} alt='' />
+                        <img src={env.API_URL+currentSong?.avatar} alt='' />
                     </div>
                     <div className="song-item-infor">
                         <div className='song-item-infor-name'>{currentSong?.name}</div>
@@ -123,7 +123,7 @@ function PlayMusic(props) {
                 <div className='controller-right'>
                     <Volumn 
                         songRef={songRef} 
-                        source={'http://localhost:5500'+currentSong?.source}
+                        source={env.API_URL+currentSong?.source}
                         name={currentSong?.name}
                     />
                 </div>

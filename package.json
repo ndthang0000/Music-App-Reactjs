@@ -14,9 +14,12 @@
     "dotenv": "^14.3.2",
     "firebase": "^9.6.5",
     "form-data": "^4.0.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
     "query-string": "^7.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-dotenv": "^0.1.3",
     "react-firebaseui": "^6.0.0",
     "react-hook-form": "^7.25.1",
     "react-icons": "^4.3.1",
@@ -29,8 +32,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-dotenv && react-scripts start", 
+    "build": "react-dotenv && react-scripts build", 
+    "serve": "react-dotenv && serve build", 
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,6 +54,13 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "react-dotenv": {
+    "whitelist": [
+      "API_URL",
+      "API_KEY_FIREBASE",
+      "AUTH_DOMAIN_FIREBASE"
     ]
   }
 }

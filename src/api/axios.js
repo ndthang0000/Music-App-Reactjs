@@ -1,8 +1,9 @@
 import axios from 'axios';
 import queryString from 'query-string';
+import env from "react-dotenv";
 
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:5500/api',
+    baseURL: env.API_URL+'/api',
     paramsSerializer: params => queryString.stringify(params),
 });
 

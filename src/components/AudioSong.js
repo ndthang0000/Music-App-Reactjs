@@ -1,4 +1,5 @@
 import { forwardRef, useEffect,useState,useRef } from "react";
+import env from "react-dotenv";
 
 const formatTime=(e)=>{
     return `${Math.round(e/60-0.5)}:${Math.round(e%60)<10?'0'+Math.round(e%60):Math.round(e%60)}`
@@ -40,7 +41,7 @@ function AudioSong({currentSong, isPlaying,handleEndedSong},ref) {
     }
     return (
         <>
-            <audio ref={ref} src={'http://localhost:5500'+currentSong?.source} autoPlay={isPlaying}></audio>
+            <audio ref={ref} src={env.API_URL+currentSong?.source} autoPlay={isPlaying}></audio>
             <span className='current-time'>{ref.current?formatTime(ref.current?.currentTime):'00:00'}</span>
             <input type="range" min={0} max={100} step={0.5} className='range-input' onChange={handleChangeInputRange} value={time}/>
             <span className='total-time'>{formatTime(currentSong?.duration)}</span>

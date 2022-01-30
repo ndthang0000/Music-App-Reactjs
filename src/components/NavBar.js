@@ -13,7 +13,6 @@ function NavBar(props,ref) {
 
 
     const userInfo=useSelector(userInfor)
-    console.log(userInfo)
 
 
     const bodyRef=useRef(document.querySelector('body'))
@@ -39,7 +38,6 @@ function NavBar(props,ref) {
         const handleSidebar=(e)=>{
             let targetEl=e.target.closest('.side-bar-menu')
             let menuEl=e.target.closest('.menu-icon')
-            console.log(menuEl)
             if(menuEl){
                 return
             }

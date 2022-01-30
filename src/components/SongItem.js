@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { AiOutlineMore } from "react-icons/ai";
 import { BsFillCollectionPlayFill,BsHeadphones } from "react-icons/bs";
 import color from '../color'
+import env from "react-dotenv";
 
 function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
     const listSongRef=useRef(null)
@@ -30,7 +31,7 @@ function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
                     {index+1}
                 </div>
                 <div className='song-item-img-area'>
-                    <img src={'http://localhost:5500'+avatar} alt='' />
+                    <img src={env.API_URL+avatar} alt='' />
                     <BsFillCollectionPlayFill className='play-btn' onClick={changeSong}/>
                 </div>
                 <div className="song-item-infor">

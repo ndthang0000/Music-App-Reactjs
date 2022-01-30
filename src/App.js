@@ -14,12 +14,11 @@ import 'firebase/compat/auth';
 import { useDispatch, useSelector } from "react-redux";
 import {setUser} from './redux/action/user'
 import LoadingPage from './page/LoadingPage';
-
-
+import env from "react-dotenv";
 
 const config = {
-  apiKey: 'AIzaSyCn2RIOkM00Zh9evr08zAs1bbDDQC17-rc',
-  authDomain: 'music-app-react-338f8.firebaseapp.com',
+  apiKey: env.API_KEY_FIREBASE,
+  authDomain: env.AUTH_DOMAIN_FIREBASE,
   projectId: "music-app-react-338f8",
   storageBucket: "music-app-react-338f8.appspot.com",
   messagingSenderId: "1028441487206",
