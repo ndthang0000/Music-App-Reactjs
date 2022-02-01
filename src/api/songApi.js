@@ -16,3 +16,11 @@ export const getPlayListSong=(id)=>{
 export const getSongById=(id)=>{
     return axiosClient.get(`/song/${id}`)
 }
+
+export const getIsLove=(data)=>{
+    return axiosClient.post(`/song/love`,data)
+}
+
+export const setLove=(data)=>{
+    return axiosClient.post(`/song/set-love`,data)
+}

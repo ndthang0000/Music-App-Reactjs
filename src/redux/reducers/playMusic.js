@@ -30,6 +30,15 @@ const playMusic=(state=initState,action)=>{
                 active:action.payload.index||0,
                 currentSong:action.payload.playList[action.payload.index]||action.payload.playList[0]
             }
+        case 'RANDOM_SONG':
+            let random=Math.floor(Math.random() * state.music.length);
+            while(random===state.active){
+                random=Math.floor(Math.random() * state.music.length);
+            }
+            return {
+                ...state,
+                active:random,
+            }
         default:
             return state
     }

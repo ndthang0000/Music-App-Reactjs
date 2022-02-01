@@ -11,17 +11,18 @@ import Volumn from './Volumn';
 import {getListSong,getPlayListSong} from '../api/songApi';
 import {setList,nextSong, preSong} from '../redux/action/playMusic'
 import env from "react-dotenv";
-
+import Love from './Love';
 
 function PlayMusic(props) {
     const songRef=useRef(null)
     const [isPlaying,setIsPlaying]=useState(false)
+    const [isRepeat,setIsRepeat]=useState(0)
     const dispath=useDispatch()
     console.log('re-render PlayMusic')
-
     const music=useSelector(state=>state.playMusic.music) // array
     const indexCurrentSong=useSelector(state=>state.playMusic.active)  // index of array
     const currentSong =music[indexCurrentSong]     // current song
+
     const handlePlayPauseSong=()=>{
         if(isPlaying){
             songRef.current.pause()
@@ -43,6 +44,21 @@ function PlayMusic(props) {
     const handleEndedSong=()=>{
         dispath(nextSong())
         setIsPlaying(true)
+    }
+    const handleRepeat=()=>{
+        if(isRepeat===1){
+            setIsRepeat(0)
+        }
+        else{
+            setIsRepeat(1)
+        }
+    }
+    const handleRandom=()=>{
+        if(isRepeat===2){
+            setIsRepeat(0)
+        }else{
+            setIsRepeat(2)
+        }
     }
     useEffect(async()=>{
         if(music.length===0){
@@ -94,12 +110,16 @@ function PlayMusic(props) {
                     </div>
                     <div className="song-item-infor">
                         <div className='song-item-infor-name'>{currentSong?.name}</div>
-                        <div className='song-item-infor-singer'>{currentSong?.singer}</div>
+                        <div className='song-item-infor-singer'>{currentSong?.singerName}</div>
                     </div>
+                    <Love id={currentSong?._id}/>
                 </div>
                 <div className='controller-mid'>
                     <div className='controller-mid-top'>
-                        <AiFillAndroid className='icon-btn'/>
+                        <AiFillAndroid 
+                            className={isRepeat===2?'icon-btn active':'icon-btn'}
+                            onClick={handleRandom}
+                        />
                         <AiFillBackward className='icon-btn' onClick={handlePreviosSong}/>
                         <div className="play">
                             <div className="player-inner" onClick={handlePlayPauseSong}>
@@ -109,7 +129,11 @@ function PlayMusic(props) {
                             </div>
                         </div>
                         <AiFillForward className='icon-btn' onClick={handleNextSong}/>
-                        <AiOutlineRetweet className='icon-btn active' title='Phát tuần tự'/>
+                        <AiOutlineRetweet 
+                            className={isRepeat===1?'icon-btn active':'icon-btn'} 
+                            title='Phát lặp lại'
+                            onClick={handleRepeat}
+                        />
                     </div>
                     <div className='controller-mid-input'>
                         <AudioSong 
@@ -117,6 +141,7 @@ function PlayMusic(props) {
                             currentSong={currentSong} 
                             isPlaying={isPlaying} 
                             handleEndedSong={handleEndedSong}
+                            isRepeat={isRepeat}
                         />
                     </div>
                 </div>
@@ -125,6 +150,7 @@ function PlayMusic(props) {
                         songRef={songRef} 
                         source={env.API_URL+currentSong?.source}
                         name={currentSong?.name}
+                        view={currentSong?.view}
                     />
                 </div>
             </div>

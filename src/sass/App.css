@@ -442,7 +442,7 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-text-stroke-width: 0.2px;
+  -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: #d41818;
   font-family: 'Roboto Mono', monospace;
 }
@@ -618,8 +618,8 @@ body {
 }
 
 .play-music .song-item-img-area {
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -630,17 +630,26 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-right: 1rem;
+  margin-right: 0.8rem;
   margin-left: 2rem;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1rem;
   position: relative;
+}
+
+@media only screen and (max-width: 1024px) {
+  .play-music .song-item-img-area {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    margin-left: 0.5rem;
+  }
 }
 
 @media only screen and (max-width: 740px) {
   .play-music .song-item-img-area {
-    width: 35px;
-    height: 35px;
+    width: 42px;
+    height: 42px;
     margin-right: 10px;
     margin-left: 0.5rem;
   }
@@ -677,11 +686,70 @@ body {
 .play-music .song-item-img .song-item-infor .song-item-infor-name {
   font-weight: 600;
   color: white;
+  font-size: 1rem;
 }
 
 .play-music .song-item-img .song-item-infor .song-item-infor-singer {
   color: #c7c7c7;
-  font-size: 14px;
+  font-size: 0.9rem;
+}
+
+.play-music .song-item-img .like-infor {
+  margin-left: 1.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .play-music .song-item-img .like-infor {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media only screen and (max-width: 740px) {
+  .play-music .song-item-img .like-infor {
+    margin-left: 0.5rem;
+    margin-right: 0.3rem;
+  }
+  .play-music .song-item-img .like-infor .icon {
+    font-size: 1.2rem !important;
+  }
+}
+
+.play-music .song-item-img .like-infor .icon {
+  font-size: 1.8rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.play-music .song-item-img .like-infor .icon:active {
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+}
+
+.play-music .song-item-img .like-infor .heart-fill {
+  color: red;
+}
+
+.play-music .song-item-img .like-infor .threedot {
+  color: white;
+}
+
+.play-music .song-item-img .like-infor .heart-none {
+  color: white;
 }
 
 .play-music .controller-mid {
@@ -716,11 +784,11 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  gap: 30px;
+  gap: 2rem;
 }
 
 .play-music .controller-mid .icon-btn {
-  font-size: 2rem;
+  font-size: 2.2rem;
   padding: 5px;
   cursor: pointer;
   border-radius: 50%;
@@ -736,6 +804,12 @@ body {
 
 .play-music .controller-mid-top {
   margin-top: 25px;
+}
+
+@media only screen and (max-width: 740px) {
+  .play-music .controller-mid-top {
+    gap: 1.4rem;
+  }
 }
 
 .play-music .controller-mid-top .play {
@@ -884,9 +958,10 @@ body {
 
 .play-music .controller-right .volumn-slider {
   position: absolute;
-  top: -70%;
-  right: 8px;
+  top: -90px;
+  right: 10px;
   color: white;
+  height: 200%;
 }
 
 .play-music .controller-right .volumn-slider.none {
@@ -897,7 +972,25 @@ body {
   color: #d8c6c6;
   font-size: 14px;
   font-style: italic;
-  margin-right: 20px;
+  margin-right: 1.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .play-music .controller-right .view {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 740px) {
@@ -908,7 +1001,7 @@ body {
 
 .play-music .controller-right .icon-btn {
   cursor: pointer;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   margin: 5px;
   color: white;
   padding: 5px;
@@ -932,9 +1025,9 @@ body {
 .play-music .controller-right .btn-download {
   background-color: #0093E9;
   background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  padding: 5px 10px;
+  padding: 5px 8px;
   cursor: pointer;
   border-radius: 5px;
   margin-right: 15px;
@@ -1176,6 +1269,75 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.page-available {
+  color: white;
+  text-align: center;
+}
+
+.page-available .tittle {
+  font-weight: 600;
+  width: 400px;
+  margin: 30px auto;
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 740px) {
+  .page-available .tittle {
+    width: 90%;
+    font-size: 2rem;
+  }
+}
+
+.page-available .icon-face {
+  font-size: 10rem;
+  color: #f39c12;
+}
+
+.page-available .icon-login {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.page-available a {
+  color: #2ecc71;
+  font-size: 1.2rem;
+}
+
+.page-available a:hover {
+  color: #27ae60;
+}
+
+.login {
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 30px auto;
+  padding: 35px 20px;
+  -webkit-box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 740px) {
+  .login {
+    width: 90%;
+    padding: 10px 5px;
+  }
+}
+
+.login h3 {
+  font-weight: 700;
+}
+
+.login .sub-tittle {
+  font-size: 12px;
+  padding: 0px 55px;
+  margin-bottom: 50px;
+}
+
+a {
+  text-decoration: none;
 }
 
 @media (max-width: 1024px) {

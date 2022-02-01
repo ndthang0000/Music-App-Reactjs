@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Wrapper from '../components/Wrapper';
 import {useSelector,useDispatch} from 'react-redux'
 import {userInfor} from '../redux/selector/userInfor'
@@ -8,13 +8,15 @@ import { getAuth, signOut } from "firebase/auth";
 
 function Me(props) {
 
-    const auth = getAuth();
-    console.log(auth)
-
+    const auth=getAuth()
     const userInfo=useSelector(userInfor)
     const dispath=useDispatch()
     const navigate=useNavigate()
-
+    useEffect(()=>{
+        if(!userInfo){
+            navigate('/not-login')
+        }
+    },[])
     const handleLogout=()=>{
         signOut(auth).then(() => {
             navigate('/')

@@ -32,3 +32,10 @@ export const setList=(data=null)=>{
         payload:data
     }
 }
+
+export const randomSong=(data=null)=>{
+    return {
+        type:'RANDOM_SONG',
+        payload:data
+    }
+}

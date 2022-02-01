@@ -1,4 +1,6 @@
 import { forwardRef, useEffect,useState,useRef } from "react";
+import {useDispatch} from 'react-redux'
+import {randomSong} from '../redux/action/playMusic'
 import env from "react-dotenv";
 
 const formatTime=(e)=>{
@@ -9,9 +11,10 @@ const clearTimer=(id)=>{
         clearInterval(id)
     }
 }
-function AudioSong({currentSong, isPlaying,handleEndedSong},ref) {
+function AudioSong({currentSong, isPlaying,handleEndedSong,isRepeat},ref) {
     const timeEl=useRef(null)
     const [time,setTime]=useState(0)
+    const dispath=useDispatch()
     useEffect(()=>{
         if(isPlaying){
             timeEl.current=setInterval(()=>{
@@ -32,9 +35,19 @@ function AudioSong({currentSong, isPlaying,handleEndedSong},ref) {
     
     useEffect(()=>{
         ref.current.addEventListener('ended',(e)=>{
-            handleEndedSong()
+            if(isRepeat===0){
+                handleEndedSong()
+            }
+            else if(isRepeat===2){
+                dispath(randomSong())
+            }
         })
-    },[])
+    },[isRepeat])
+
+    useEffect(()=>{
+        ref.current.loop=isRepeat===1?true:false
+    },[isRepeat])
+
     const handleChangeInputRange=(e)=>{
         setTime(e.target.value)
         ref.current.currentTime=e.target.value/100*ref.current.duration

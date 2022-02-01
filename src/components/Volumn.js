@@ -2,7 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import { BsFillVolumeMuteFill,BsFillVolumeUpFill, BsDownload, BsHeadphones } from "react-icons/bs";
 import Slider from '@mui/material/Slider';
 
-function Volumn({songRef,source,name}) {
+function Volumn({songRef,source,view}) {
     const [isShowVolumn,setIsShowVolumn]=useState(false)
     const [isMuted,setIsMuted]=useState(false)
     const [volume,setVolume]=useState(100)
@@ -66,12 +66,46 @@ function Volumn({songRef,source,name}) {
             setIsShowVolumn(false)
         },3000)
     }
+    const handleMute=()=>{
+        if(window.innerWidth<1025){
+            return
+        }
+        let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+        if(playMusic){
+            let newPlayMusic={
+                ...playMusic,
+                volume:0,
+            }
+            localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
+        }
+        setIsMuted(true)
+        setVolume(0)
+        songRef.current.volume=0
+    }
+    const handleUnMute=()=>{
+        if(window.innerWidth<1025){
+            return
+        }
+        setIsMuted(false)
+        setVolume(50)
+        songRef.current.volume=0.5
+        let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+        if(playMusic){
+            let newPlayMusic={
+                ...playMusic,
+                volume:0.5,
+            }
+            localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
+        }
+    }
     return (
         <>  
             <div className="view">
                 <BsHeadphones className='icon-btn active'/>
-                <span>365</span>
-                <span> views</span>
+                <div>
+                    <span>{view}</span>
+                    <span> views</span>
+                </div>
             </div>
             <div className="btn-download">
                 <BsDownload style={{marginRight:5,fontSize:16}}/>
@@ -79,32 +113,36 @@ function Volumn({songRef,source,name}) {
                     Tải nhạc
                 </a>
             </div>
-            {isMuted?
-            <BsFillVolumeMuteFill 
-                style={{color:'white',position:'relative',zIndex:100000}} 
-                className='icon-btn'
-                onMouseOver={()=>{setIsShowVolumn(true)}}
-            />:
-            <BsFillVolumeUpFill 
-                style={{color:'white',position:'relative',zIndex:100000}} 
-                className='icon-btn'
-                onMouseOver={()=>{setIsShowVolumn(true)}}
-            />
-            }
+            <div style={{position:'relative'}}>
+                {isMuted?
+                <BsFillVolumeMuteFill 
+                    style={{color:'white',zIndex:100000}} 
+                    className='icon-btn'
+                    onClick={handleUnMute}
+                    onMouseOver={()=>{setIsShowVolumn(true)}}
+                />:
+                <BsFillVolumeUpFill 
+                    style={{color:'white',zIndex:100000}} 
+                    className='icon-btn'
+                    onClick={handleMute}
+                    onMouseOver={()=>{setIsShowVolumn(true)}}
+                />
+                }
+                <Slider
+                    className={isShowVolumn?'volumn-slider':'volumn-slider none'}
+                    sx={{
+                    '& input[type="range"]': {
+                        WebkitAppearance: 'slider-vertical',
+                    },
+                    }}
+                    orientation="vertical"
+                    value={volume}
+                    aria-label="Temperature"
+                    onKeyDown={preventHorizontalKeyboardNavigation}
+                    onChange={handleVolumnChange}
+                />
+            </div>
             
-            <Slider
-                className={isShowVolumn?'volumn-slider':'volumn-slider none'}
-                sx={{
-                '& input[type="range"]': {
-                    WebkitAppearance: 'slider-vertical',
-                },
-                }}
-                orientation="vertical"
-                value={volume}
-                aria-label="Temperature"
-                onKeyDown={preventHorizontalKeyboardNavigation}
-                onChange={handleVolumnChange}
-            />
         </>
     );
 }

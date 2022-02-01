@@ -15,10 +15,12 @@ function SideBar(props) {
                         <span>Trang chủ</span>
                     </div>
                 </Link>
-                <div className="side-bar-menu-item">
-                    <BiUser/>
-                    <span>Cá Nhân</span>
-                </div>
+                <Link to='/me'>
+                    <div className="side-bar-menu-item">
+                        <BiUser/>
+                        <span>Cá Nhân</span>
+                    </div>
+                </Link>
                 <div className="side-bar-menu-item">
                     <BiSearch/>
                     <span>Tìm kiếm</span>
