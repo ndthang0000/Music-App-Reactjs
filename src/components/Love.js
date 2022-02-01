@@ -10,11 +10,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
 
-function Love({id}) {
+import {BiSlideshow,BiDownload,BiBellMinus } from "react-icons/bi";
+
+function Love({id,source}) {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -59,6 +58,7 @@ function Love({id}) {
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
+                className="sub-menu"
                 onClose={handleClose}
                 onClick={handleClose}
                 PaperProps={{
@@ -68,22 +68,22 @@ function Love({id}) {
                     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                     mt: 1.5,
                     '& .MuiAvatar-root': {
-                    width: 32,
-                    height: 32,
+                    width: 50,
+                    height: 50,
                     ml: -0.5,
                     mr: 1,
                     },
                     '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0,
+                        content: '""',
+                        display: 'block',
+                        position: 'absolute',
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: 'background.paper',
+                        transform: 'translateY(-50%) rotate(45deg)',
+                        zIndex: 0,
                     },
                 },
                 }}
@@ -97,21 +97,45 @@ function Love({id}) {
                 <Divider />
                 <MenuItem>
                     <ListItemIcon>
-                        <PersonAdd fontSize="small" />
+                        <div className='side-bar-menu-playlist' style={{marginRight:10}}>
+                            <BiSlideshow className='fs-20'/>
+                        </div>
                     </ListItemIcon>
-                    Add another account
+                    <span className='word-space-normal'>
+                        Thêm vào PlayList
+                    </span>
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
-                        <Settings fontSize="small" />
+                        <div 
+                            className='side-bar-menu-playlist' 
+                            style={{
+                                marginRight:10, 
+                                backgroundColor: '#0093E9',
+                                backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'
+                                }
+                        }>
+                            <BiDownload className='fs-20'/>
+                        </div>
                     </ListItemIcon>
-                    Settings
+                    <a href={source} download='test.mp3' className='word-space-normal'>
+                        Tải nhạc
+                    </a>
                 </MenuItem>
                 <MenuItem>
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
+                <ListItemIcon>
+                        <div 
+                            className='side-bar-menu-playlist' 
+                            style={{
+                                marginRight:10, 
+                                backgroundColor: '#21D4FD',
+                                backgroundImage: 'linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)'
+                                }
+                        }>
+                            <BiBellMinus className='fs-20'/>
+                        </div>
                     </ListItemIcon>
-                    Logout
+                    <span className='word-space-normal'>Theo dõi nghệ sĩ</span>
                 </MenuItem>
             </Menu>
         </div>

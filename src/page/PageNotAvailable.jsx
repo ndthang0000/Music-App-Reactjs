@@ -3,7 +3,6 @@ import Wrapper from '../components/Wrapper';
 import {Link} from 'react-router-dom'
 import { BiLogIn } from "react-icons/bi";
 import { BsFillEmojiFrownFill } from "react-icons/bs";
-import SubMenu from '../components/SubMenu'
 
 function PageNotAvailable(props) {
     return (
@@ -14,7 +13,6 @@ function PageNotAvailable(props) {
                     <BsFillEmojiFrownFill/>
                 </div>
                 <Link to='/login'><BiLogIn className='icon-login'/>Đăng nhập ngay</Link>
-                <SubMenu/>
             </div>
         </Wrapper>
     );

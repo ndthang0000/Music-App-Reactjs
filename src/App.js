@@ -9,6 +9,7 @@ import PlayMusic from "./components/PlayMusic";
 import SideBar from './components/SideBar';
 import NavBar from './components/NavBar';
 import PageNotAvailable from './page/PageNotAvailable';
+import PlayList from './page/PlayList';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
@@ -51,6 +52,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/song/upload" element={<UploadSong />} />
+          <Route path="/play-list" element={<PlayList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/me" element={<Me />} />
           <Route path="/not-login" element={<PageNotAvailable />} />

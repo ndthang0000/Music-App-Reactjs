@@ -33,6 +33,13 @@ export const setList=(data=null)=>{
     }
 }
 
+export const appendSongInList=(data=null)=>{
+    return {
+        type:'APPEND_SONG',
+        payload:data
+    }
+}
+
 export const randomSong=(data=null)=>{
     return {
         type:'RANDOM_SONG',

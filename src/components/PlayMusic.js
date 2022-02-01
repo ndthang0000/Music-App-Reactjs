@@ -107,12 +107,16 @@ function PlayMusic(props) {
                 <div className="song-item-img">
                     <div className='song-item-img-area'>
                         <img src={env.API_URL+currentSong?.avatar} alt='' />
+                        <i className={isPlaying?'icon-playing':'none icon-playing'}></i>
                     </div>
                     <div className="song-item-infor">
                         <div className='song-item-infor-name'>{currentSong?.name}</div>
                         <div className='song-item-infor-singer'>{currentSong?.singerName}</div>
                     </div>
-                    <Love id={currentSong?._id}/>
+                    <Love 
+                        id={currentSong?._id}
+                        source={env.API_URL+currentSong?.source}
+                    />
                 </div>
                 <div className='controller-mid'>
                     <div className='controller-mid-top'>

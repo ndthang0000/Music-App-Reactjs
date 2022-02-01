@@ -155,6 +155,10 @@ body{
     right: 0;
     height: $heightSideBar;
     z-index: 2;
+    @include flexContent(space-between,center);
+    @include tablet(){
+        left: 0;
+    }
     .menu-icon{
         display: none;
         font-size: 35px;
@@ -164,10 +168,6 @@ body{
         @include tablet{
             display: block
         }
-    }
-    @include flexContent(space-between,center);
-    @include tablet(){
-        left: 0;
     }
     &-search{
         flex-basis: 40%;
@@ -215,17 +215,21 @@ body{
             margin-right: 10px;
         }
         &-item{
-            width: 50px;
-            height: 50px;
+            width: 3rem;
+            height: 3rem;
             @include flexContent();
             background-color: rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             font-size: 25px;
             margin-right: 12px;
             overflow: hidden;
+            transition: 0.2s;
             cursor: pointer;
             img{
                 width: 100%;
+            }
+            &:active{
+                transform: scale(0.9);
             }
         }
     }
@@ -323,6 +327,18 @@ body{
                     color: rgb(224, 215, 215);
                 }
             }
+            .icon-playing{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                background-image: url('../../public/img/icon-playing.gif');
+                height: 30px;
+                width: 35px;
+                &.none{
+                    display: none;
+                }
+            }
         }
         .song-item-infor{
             .song-item-infor-name{
@@ -390,6 +406,7 @@ body{
         display: flex;
         flex: 30%;
         align-items: center;
+        position: relative;
         @include mobile(){
             flex: 20% !important;
         }
@@ -430,6 +447,18 @@ body{
                 font-size: 24px;
                 &:hover{
                     color: rgb(224, 215, 215);
+                }
+            }
+            .icon-playing{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                background-image: url('../../public/img/icon-playing.gif');
+                height: 30px;
+                width: 35px;
+                &.none{
+                    display: none;
                 }
             }
         }
@@ -506,8 +535,11 @@ body{
         }
         &-top{
             margin-top: 25px;
+            @include tablet{
+                gap: 1.8rem;
+            }
             @include mobile{
-                gap: 1.4rem;
+                gap: 1.2rem;
             }
             .play {
                 position: relative;
@@ -579,15 +611,23 @@ body{
             position: absolute;
             top: -5px;
             left: 0;
-            font-size: 14px;
+            font-size: 0.9rem;;
             user-select: none;
+            color: rgb(219, 218, 218);
+            @include mobile{
+                top: 0;
+            }
         }
         .total-time{
             position: absolute;
             top: -5px;
             right: 0;
-            font-size: 1rem;
+            font-size: 0.9rem;
             user-select: none;
+            color: rgb(219, 218, 218);
+            @include mobile{
+                top: 0;
+            }
         }
     }
     .controller-right{
@@ -863,6 +903,33 @@ body{
 }
 a{
     text-decoration: none;
+}
+.word-space-normal{
+    word-spacing: 0px !important;
+}
+.fs-20{
+    font-size: 20px !important;
+}
+.play-list{
+    &-tittle{
+        @include flexContent();
+        user-select: none;
+        justify-content: flex-start;
+        color: white;
+        font-weight: 800;
+        word-spacing: -10px;
+        margin-left: 40px;
+    }
+    &-content{
+        margin-top: 40px;
+        .name{
+            font-weight: 550;
+        }
+    }
+    p{
+        word-spacing: 0px;
+        font-family: 'Roboto Mono', monospace;
+    }
 }
 @media (max-width:1024px){
     html{

@@ -5,7 +5,9 @@ import { BsMusicNoteBeamed, BsCardImage } from "react-icons/bs";
 import FileSongInfor from '../components/FileSongInfor'
 import FileImageInfor from '../components/FileImageInfor'
 import { useForm } from "react-hook-form";
-import {upload} from '../api/songApi'
+import {upload,getListSong} from '../api/songApi'
+import {useDispatch } from 'react-redux';
+import {appendSongInList} from '../redux/action/playMusic'
 import "toastify-js/src/toastify.css"
 import env from "react-dotenv";
 
@@ -13,6 +15,7 @@ import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function UpLoad(props) {
+    const dispath=useDispatch()
     const [song,setSong]=useState(null)
     const [image,setImage]=useState(null)
     const [isValid,setIsValid]=useState({song:false,image:false})
@@ -77,6 +80,7 @@ function UpLoad(props) {
                     background: "linear-gradient(to right, #00b09b, #96c93d)",
                 }
             }).showToast();
+            dispath(appendSongInList(res.song))
         }
     }
     return (

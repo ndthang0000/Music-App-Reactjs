@@ -9,11 +9,17 @@ function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
     useEffect(()=>{
         listSongRef.current.addEventListener('mouseover',(e)=>{
             listSongRef.current.querySelector('.song-item-img-area img').style.opacity='0.5'
-            listSongRef.current.querySelector('.play-btn').style.visibility='visible'
+            let El=listSongRef.current.querySelector('.play-btn')
+            if(El){
+                El.style.visibility='visible'
+            }
         })
         listSongRef.current.addEventListener('mouseout',(e)=>{
             listSongRef.current.querySelector('.song-item-img-area img').style.opacity='1'
-            listSongRef.current.querySelector('.play-btn').style.visibility='hidden'
+            let El=listSongRef.current.querySelector('.play-btn')
+            if(El){
+                El.style.visibility='hidden'
+            }
         })
         return ()=>{
             //listSongRef.current.removeEventListener('mouseout')
@@ -32,7 +38,10 @@ function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
                 </div>
                 <div className='song-item-img-area'>
                     <img src={env.API_URL+avatar} alt='' />
-                    <BsFillCollectionPlayFill className='play-btn' onClick={changeSong}/>
+                    {isActive===index?
+                        (<i className='icon-playing'></i>):
+                        (<BsFillCollectionPlayFill className='play-btn' onClick={changeSong}/>)
+                    }
                 </div>
                 <div className="song-item-infor">
                     <div className='song-item-infor-name'>{name}</div>

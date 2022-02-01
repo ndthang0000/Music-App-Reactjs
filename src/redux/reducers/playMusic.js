@@ -39,6 +39,13 @@ const playMusic=(state=initState,action)=>{
                 ...state,
                 active:random,
             }
+        case 'APPEND_SONG':
+            let newMusic=[...state.music]
+            newMusic.push(action.payload)
+            return {
+                ...state,
+                music:newMusic
+            }
         default:
             return state
     }

@@ -214,6 +214,12 @@ body {
           justify-content: space-between;
 }
 
+@media only screen and (max-width: 1024px) {
+  .nav-bar-menu {
+    left: 0;
+  }
+}
+
 .nav-bar-menu .menu-icon {
   display: none;
   font-size: 35px;
@@ -225,12 +231,6 @@ body {
 @media only screen and (max-width: 1024px) {
   .nav-bar-menu .menu-icon {
     display: block;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .nav-bar-menu {
-    left: 0;
   }
 }
 
@@ -312,8 +312,8 @@ body {
 }
 
 .nav-bar-menu-sub-item {
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -328,11 +328,18 @@ body {
   font-size: 25px;
   margin-right: 12px;
   overflow: hidden;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
   cursor: pointer;
 }
 
 .nav-bar-menu-sub-item img {
   width: 100%;
+}
+
+.nav-bar-menu-sub-item:active {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 
 .main-content {
@@ -487,6 +494,21 @@ body {
   color: #e0d7d7;
 }
 
+.list-song .song-item-img-area .icon-playing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-image: url("../../public/img/icon-playing.gif");
+  height: 30px;
+  width: 35px;
+}
+
+.list-song .song-item-img-area .icon-playing.none {
+  display: none;
+}
+
 .list-song .song-item-img .song-item-infor .song-item-infor-name {
   font-weight: 600;
 }
@@ -607,6 +629,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  position: relative;
 }
 
 @media only screen and (max-width: 740px) {
@@ -675,6 +698,21 @@ body {
 
 .play-music .song-item-img-area .play-btn:hover {
   color: #e0d7d7;
+}
+
+.play-music .song-item-img-area .icon-playing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-image: url("../../public/img/icon-playing.gif");
+  height: 30px;
+  width: 35px;
+}
+
+.play-music .song-item-img-area .icon-playing.none {
+  display: none;
 }
 
 @media only screen and (max-width: 740px) {
@@ -806,9 +844,15 @@ body {
   margin-top: 25px;
 }
 
+@media only screen and (max-width: 1024px) {
+  .play-music .controller-mid-top {
+    gap: 1.8rem;
+  }
+}
+
 @media only screen and (max-width: 740px) {
   .play-music .controller-mid-top {
-    gap: 1.4rem;
+    gap: 1.2rem;
   }
 }
 
@@ -897,22 +941,36 @@ body {
   position: absolute;
   top: -5px;
   left: 0;
-  font-size: 14px;
+  font-size: 0.9rem;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  color: #dbdada;
+}
+
+@media only screen and (max-width: 740px) {
+  .play-music .controller-mid .current-time {
+    top: 0;
+  }
 }
 
 .play-music .controller-mid .total-time {
   position: absolute;
   top: -5px;
   right: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  color: #dbdada;
+}
+
+@media only screen and (max-width: 740px) {
+  .play-music .controller-mid .total-time {
+    top: 0;
+  }
 }
 
 .play-music .controller-right {
@@ -1338,6 +1396,50 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.word-space-normal {
+  word-spacing: 0px !important;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+.play-list-tittle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  color: white;
+  font-weight: 800;
+  word-spacing: -10px;
+  margin-left: 40px;
+}
+
+.play-list-content {
+  margin-top: 40px;
+}
+
+.play-list-content .name {
+  font-weight: 550;
+}
+
+.play-list p {
+  word-spacing: 0px;
+  font-family: 'Roboto Mono', monospace;
 }
 
 @media (max-width: 1024px) {

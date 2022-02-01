@@ -33,14 +33,14 @@ function SideBar(props) {
             <div className='side-bar-hr'>
             </div>
             <div className="side-bar-menu-sub-list">
-                <div className="side-bar-menu-item">
+                <Link to='play-list' className="side-bar-menu-item">
                     <div className='side-bar-menu-playlist'>
                         <BiSlideshow/>
                     </div>
                     <span>
                     Playlist
                     </span>
-                </div>
+                </Link>
                 <div className="side-bar-menu-item">
                     <div className='side-bar-menu-playlist rencent'>
                         <BiMusic/>

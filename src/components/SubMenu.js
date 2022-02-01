@@ -10,6 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { BiHomeCircle,BiMusic,BiUser,BiSearch,BiLike,BiSlideshow } from "react-icons/bi";
 
 export default function AccountMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -72,27 +73,30 @@ export default function AccountMenu() {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem>
-            <Avatar /> Profile
+                <Avatar /> 
+                Profile
             </MenuItem>
 
             <Divider />
             <MenuItem>
-            <ListItemIcon>
-                <PersonAdd fontSize="small" />
-            </ListItemIcon>
-            Add another account
+                <ListItemIcon>
+                    <div className='side-bar-menu-playlist'>
+                        <BiSlideshow/>
+                    </div>
+                </ListItemIcon>
+                Thêm vào PlayList
             </MenuItem>
             <MenuItem>
-            <ListItemIcon>
-                <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
+                <ListItemIcon>
+                    <Settings fontSize="small" />
+                </ListItemIcon>
+                Settings
             </MenuItem>
             <MenuItem>
-            <ListItemIcon>
-                <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
+                <ListItemIcon>
+                    <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
             </MenuItem>
         </Menu>
         </>
