@@ -32,6 +32,17 @@
   display: flex;
 }
 
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ds-none {
+  display: none !important;
+}
+
 .toast-upload {
   font-size: 18px;
   padding: 15px;
@@ -52,6 +63,10 @@ body {
   height: 100%;
   width: 100%;
   font-size: inherit;
+}
+
+input {
+  word-spacing: 0;
 }
 
 .box-shadow-navbar {
@@ -562,7 +577,7 @@ body {
   font-style: italic;
   font-weight: 300;
   color: #e2d5d5;
-  margin-right: 9px;
+  margin-right: 0.8rem;
 }
 
 .list-song .song-item-control .view .iconn {
@@ -1399,7 +1414,7 @@ a {
 }
 
 .word-space-normal {
-  word-spacing: 0px !important;
+  word-spacing: 1px !important;
 }
 
 .fs-20 {
@@ -1426,7 +1441,8 @@ a {
   color: white;
   font-weight: 800;
   word-spacing: -10px;
-  margin-left: 40px;
+  margin-left: 10px;
+  font-size: 30px;
 }
 
 .play-list-content {
@@ -1440,6 +1456,141 @@ a {
 .play-list p {
   word-spacing: 0px;
   font-family: 'Roboto Mono', monospace;
+}
+
+.play-list .create-play-list {
+  background-color: #FA8BFF;
+  background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+  border-radius: 20px;
+  display: block;
+  position: relative;
+  width: 260px;
+}
+
+.play-list .create-play-list .add-area {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  color: #fff1f1;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.play-list .create-play-list .add-area .icon-add {
+  margin-right: 5px;
+  font-size: 2rem;
+}
+
+.play-list .create-play-list:hover .add-area {
+  font-size: 1rem;
+}
+
+.play-list-detail .img {
+  width: 100%;
+  border-radius: 10px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.play-list-detail .img:hover {
+  -webkit-transform: scale(0.99);
+          transform: scale(0.99);
+}
+
+.play-list-detail .name {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 650;
+  color: white;
+}
+
+.play-list-detail .time {
+  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: 550;
+  color: #f1e3e3;
+}
+
+.play-list-detail .empty-song {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 100px 15px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  font-size: 18px;
+  font-style: italic;
+}
+
+.play-list-detail .empty-song .icon {
+  font-size: 35px;
+  margin-right: 10px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.play-list-detail .icon-play {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+.play-list-detail .btn-play-all {
+  background-image: -webkit-gradient(linear, left top, right top, from(#D31027), color-stop(51%, #EA384D), to(#D31027));
+  background-image: linear-gradient(to right, #D31027 0%, #EA384D 51%, #D31027 100%);
+}
+
+.play-list-detail .btn-play-all {
+  margin: 10px;
+  padding: 10px 25px;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  -webkit-box-shadow: 0 0 5px #7a7979;
+          box-shadow: 0 0 5px #7a7979;
+  border-radius: 10px;
+  display: block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.play-list-detail .btn-play-all:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.dialog img {
+  border: 1px solid #777 !important;
+}
+
+.dialog span {
+  font-weight: 650 !important;
 }
 
 @media (max-width: 1024px) {

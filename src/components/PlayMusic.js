@@ -115,7 +115,11 @@ function PlayMusic(props) {
                     </div>
                     <Love 
                         id={currentSong?._id}
+                        avatar={currentSong?.avatar}
+                        name={currentSong?.name}
                         source={env.API_URL+currentSong?.source}
+                        view={currentSong?.view}
+                        love={currentSong?.love}
                     />
                 </div>
                 <div className='controller-mid'>

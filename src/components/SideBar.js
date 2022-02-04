@@ -33,7 +33,7 @@ function SideBar(props) {
             <div className='side-bar-hr'>
             </div>
             <div className="side-bar-menu-sub-list">
-                <Link to='play-list' className="side-bar-menu-item">
+                <Link to='me' className="side-bar-menu-item">
                     <div className='side-bar-menu-playlist'>
                         <BiSlideshow/>
                     </div>

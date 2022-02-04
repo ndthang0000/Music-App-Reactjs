@@ -4,22 +4,32 @@ import {getIsLove,setLove} from '../api/songApi'
 import {useSelector} from 'react-redux'
 import {userInfor} from '../redux/selector/userInfor'
 import { useNavigate } from 'react-router-dom';
-
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-
 import {BiSlideshow,BiDownload,BiBellMinus } from "react-icons/bi";
+import { BsHeadphones,BsHeartFill } from "react-icons/bs";
+import SimpleDialog from './SimpleDialog';
+import env from "react-dotenv";
 
-function Love({id,source}) {
+function Love({id,source,name,avatar,view,love}) {
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const [isOpen, setIsOpen] = useState(false);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+    const handleOpenDiaLog = () => {
+        setIsOpen(true);
+    };
+
+    const handleCloseDiaLog = () => {
+        setIsOpen(false);
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -32,7 +42,7 @@ function Love({id,source}) {
             const data=await getIsLove({idSong:id,uidUser:userInfo.uid})
             setIsLove(data.isLove)
         }
-    },[id])
+    },[id,userInfo])
     const handleSetLove=async(e)=>{
         if(!userInfo){
             return navigate('/not-login')
@@ -53,6 +63,13 @@ function Love({id,source}) {
             <BsThreeDots 
                 className='icon threedot'
                 onClick={handleClick}
+            />
+            <SimpleDialog
+                open={isOpen}
+                onClose={handleCloseDiaLog}
+                idSong={id}
+                avatar={avatar}
+                name={name}
             />
             <Menu
                 anchorEl={anchorEl}
@@ -90,12 +107,28 @@ function Love({id,source}) {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
-                    <Avatar />
-                    My account
+                <MenuItem className='word-space-normal'>
+                    <Avatar 
+                        alt="Remy Sharp"
+                        src={env.API_URL+avatar}
+                        sx={{ width: 24, height: 24 }}
+                    />
+                    <div style={{display:'flex',alignItems:'center',flexDirection:'column'}}>
+                        <div className='word-space-normal' style={{fontWeight:600}}>{name}</div>
+                        <div style={{display:'flex',gap:10}}>
+                            <div style={{display:'flex',alignItems:'center',gap:3}}>
+                                <BsHeadphones style={{fontSize:18,color:'#747d8c'}}/>
+                                <span style={{color:'#747d8c'}}>{view}</span>
+                            </div>
+                            <div style={{display:'flex',alignItems:'center',gap:3}}>
+                                <BsHeartFill style={{fontSize:18,color:'#ff4757'}}/>
+                                <span style={{color:'#ff4757'}}>{love}</span>
+                            </div>
+                        </div>
+                    </div>
                 </MenuItem>
                 <Divider />
-                <MenuItem>
+                <MenuItem onClick={handleOpenDiaLog}>
                     <ListItemIcon>
                         <div className='side-bar-menu-playlist' style={{marginRight:10}}>
                             <BiSlideshow className='fs-20'/>

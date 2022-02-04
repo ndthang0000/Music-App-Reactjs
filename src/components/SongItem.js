@@ -4,7 +4,7 @@ import { BsFillCollectionPlayFill,BsHeadphones } from "react-icons/bs";
 import color from '../color'
 import env from "react-dotenv";
 
-function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
+function SongItem({avatar,singerName,name,index,changeSong,isActive,view}) {
     const listSongRef=useRef(null)
     useEffect(()=>{
         listSongRef.current.addEventListener('mouseover',(e)=>{
@@ -48,13 +48,13 @@ function SongItem({avatar,singerName,name,index,changeSong,isActive}) {
                     <div className='song-item-infor-singer'>{singerName}</div>
                 </div>
             </div>
-            <div className='name'>
+            <div className='name' style={{fontWeight:300}}>
                 {name}
             </div>
             <div className='song-item-control'>
                 <div className='view'>
                     <BsHeadphones className='iconn'/>
-                    <span>354 views</span>
+                    <span>{view} view</span>
                 </div>
                 <div className='icon'>
                     <AiOutlineMore/>

@@ -5,9 +5,21 @@ export const register=(data)=>{
 }
 
 export const getAllPlayList=(data)=>{
-    return axiosClient.get(`/user/${data.uid}/play-list`)
+    return axiosClient.get(`/me/play-list`)
+}
+
+export const getDetailPlayList=(data)=>{
+    return axiosClient.get(`/me/play-list/detail/${data}`)
+}
+
+export const createPlayList=(data)=>{
+    return axiosClient.post(`/me/play-list/create`,data)
 }
 
 export const addPlayList=(data)=>{
-    return axiosClient.get(`/user/${data.uid}/play-list/add${data.id}`)
+    return axiosClient.post(`/me/play-list/add`,data)
+}
+
+export const upload=(data)=>{
+    return axiosClient.post('/me/upload',data)
 }

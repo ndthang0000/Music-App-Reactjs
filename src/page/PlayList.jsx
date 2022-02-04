@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom'
 import {BiSlideshow } from "react-icons/bi";
 import PlayListItem from '../components/PlayListItem'
 import {getAllPlayList} from '../api/user'
+import { AiFillPlusCircle } from "react-icons/ai";
 
 function PlayList(props) {
     const userInfo=useSelector(userInfor)
@@ -32,9 +33,12 @@ function PlayList(props) {
                     </h1>
                     <div className="play-list-content">
                         <div className="row" style={{gap:20}}>
+                            <div className="col-lg-3 col-md-4 col-sm-6 word-space-normal create-play-list">
+                                <AiFillPlusCircle/>
+                            </div>
                             {playList.map(item=>(
-                                <div className="col-lg-3 col-md-4 col-sm-6 word-space-normal">
-                                    <PlayListItem {...item} />
+                                <div className="col-lg-3 col-md-4 col-sm-6 word-space-normal" key={item._id}>
+                                    <PlayListItem {...item}/>
                                 </div>))
                             }
                         </div>

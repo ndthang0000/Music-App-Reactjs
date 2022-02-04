@@ -60,7 +60,7 @@ function NavBar(props,ref) {
                 <div className='nav-bar-menu-sub-item' onClick={handleChangeTheme}>
                     <img src="/img/newyear.png" alt="" />
                 </div>
-                <Link to='/song/upload' style={{color:'white'}}>
+                <Link to='/me/upload' style={{color:'white'}}>
                     <div className='nav-bar-menu-sub-item'>
                         <BiCloudUpload/>
                     </div>

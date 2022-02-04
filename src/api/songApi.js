@@ -1,8 +1,5 @@
 import axiosClient from "./axios"
 
-export const upload=(data)=>{
-    return axiosClient.post('/song/upload',data)
-}
 
 export const getListSong=()=>{
     return axiosClient.get('/song/get-list')
@@ -18,9 +15,9 @@ export const getSongById=(id)=>{
 }
 
 export const getIsLove=(data)=>{
-    return axiosClient.post(`/song/love`,data)
+    return axiosClient.get(`/song/love/${data.idSong}`)
 }
 
 export const setLove=(data)=>{
-    return axiosClient.post(`/song/set-love`,data)
+    return axiosClient.get(`/song/set-love/${data.idSong}`)
 }

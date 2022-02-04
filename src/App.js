@@ -1,16 +1,13 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
 import './sass/App.css'
 import Dashboard from "./page/Dashboard";
 import UploadSong from "./page/UploadSong";
-import Me from "./page/Me";
 import Login from './page/Login'
 import PlayMusic from "./components/PlayMusic";
 import SideBar from './components/SideBar';
 import NavBar from './components/NavBar';
 import PageNotAvailable from './page/PageNotAvailable';
-import PlayList from './page/PlayList';
-
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +16,9 @@ import LoadingPage from './page/LoadingPage';
 import env from "react-dotenv";
 import {register} from './api/user'
 
+import Me from './page/Me';
+import UpLoad from './components/UpLoad';
+import PlayListDetail from './components/PlayListDetail';
 const config = {
   apiKey: env.API_KEY_FIREBASE,
   authDomain: env.AUTH_DOMAIN_FIREBASE,
@@ -51,10 +51,10 @@ function App() {
         <SideBar/>
         <NavBar />
         <Routes>
-          <Route path="/song/upload" element={<UploadSong />} />
-          <Route path="/play-list" element={<PlayList />} />
+          <Route path="/me/play-list/:id" element={<PlayListDetail />}/>
+          <Route path="/me/upload" element={<UploadSong />} />
+          <Route path="/me" element={<Me />}/>
           <Route path="/login" element={<Login />} />
-          <Route path="/me" element={<Me />} />
           <Route path="/not-login" element={<PageNotAvailable />} />
           <Route path="/" element={<Dashboard />} />
         </Routes>

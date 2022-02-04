@@ -27,6 +27,15 @@
 .flex{
     display: flex;
 }
+.truncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ds-none{
+    display: none !important;
+}
 .toast-upload{
     font-size: 18px;
     padding: 15px;
@@ -46,7 +55,9 @@ body{
     width: 100%;
     font-size: inherit;
 }
-
+input{
+    word-spacing: 0;
+}
 .box-shadow-navbar{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     background-size: cover;
@@ -370,7 +381,7 @@ body{
             font-style: italic;
             font-weight: 300;
             color: rgb(226, 213, 213);
-            margin-right: 9px;
+            margin-right: 0.8rem;
             .iconn{
                 font-size: 1.6rem;
                 color:white;
@@ -905,7 +916,7 @@ a{
     text-decoration: none;
 }
 .word-space-normal{
-    word-spacing: 0px !important;
+    word-spacing: 1px !important;
 }
 .fs-20{
     font-size: 20px !important;
@@ -918,7 +929,8 @@ a{
         color: white;
         font-weight: 800;
         word-spacing: -10px;
-        margin-left: 40px;
+        margin-left: 10px;
+        font-size: 30px;
     }
     &-content{
         margin-top: 40px;
@@ -929,6 +941,108 @@ a{
     p{
         word-spacing: 0px;
         font-family: 'Roboto Mono', monospace;
+    }
+    .create-play-list{
+        background-color: #FA8BFF;
+        background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+        border-radius: 20px;
+        display: block;
+        position: relative;
+        width: 260px;
+        .add-area{
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: fit-content;
+            color: rgb(255, 241, 241);
+            font-weight: 600;
+            font-size: 1.2rem;
+            .icon-add{
+                margin-right: 5px;
+                font-size: 2rem;
+            }
+        }
+        &:hover .add-area{
+            font-size: 1rem;
+        }
+    }
+}
+.play-list-detail{
+    .img{
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        &:hover{
+            transform: scale(0.99);
+        }
+    }
+    .name{
+        text-align: center;
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: 650;
+        color: white;
+    }
+    .time{
+        text-align: center;
+        margin-top: 5px;
+        font-size: 14px;
+        font-weight: 550;
+        color: rgb(241, 227, 227);
+    }
+    .empty-song{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 100px 15px;
+        text-align: center;
+        background-color: $white-alpha-20;
+        border-radius: 10px;
+        font-size: 18px;
+        font-style: italic;
+        .icon{
+            font-size: 35px;
+            margin-right: 10px;
+            color: $white-alpha-30;
+        }
+    }
+    .icon-play{
+        font-size: 30px;
+        margin-right: 10px;
+    }
+    .btn-play-all {background-image: linear-gradient(to right, #D31027 0%, #EA384D  51%, #D31027  100%)}
+    .btn-play-all {
+        margin: 10px;
+        padding: 10px 25px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;            
+        box-shadow: 0 0 5px rgb(122, 121, 121);
+        border-radius: 10px;
+        display: block;
+        width: fit-content;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+        .btn-play-all:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+    }
+    
+}
+.dialog{
+    img{
+        border: 1px solid #777 !important;
+    }
+    span{
+        font-weight: 650 !important;
     }
 }
 @media (max-width:1024px){

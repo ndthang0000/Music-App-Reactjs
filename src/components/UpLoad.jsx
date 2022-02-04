@@ -5,7 +5,7 @@ import { BsMusicNoteBeamed, BsCardImage } from "react-icons/bs";
 import FileSongInfor from '../components/FileSongInfor'
 import FileImageInfor from '../components/FileImageInfor'
 import { useForm } from "react-hook-form";
-import {upload,getListSong} from '../api/songApi'
+import {upload} from '../api/user'
 import {useDispatch } from 'react-redux';
 import {appendSongInList} from '../redux/action/playMusic'
 import "toastify-js/src/toastify.css"
