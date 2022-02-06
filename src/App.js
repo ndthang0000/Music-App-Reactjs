@@ -11,14 +11,16 @@ import PageNotAvailable from './page/PageNotAvailable';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { useDispatch, useSelector } from "react-redux";
-import {setUser} from './redux/action/user'
+import {setUser, setPlaylistAction} from './redux/action/user'
 import LoadingPage from './page/LoadingPage';
 import env from "react-dotenv";
 import {register} from './api/user'
-
+import {getAllPlayList} from './api/user'
 import Me from './page/Me';
-import UpLoad from './components/UpLoad';
+import MusicList from './page/MusicList'
 import PlayListDetail from './components/PlayListDetail';
+import Setup from './page/Setup'
+
 const config = {
   apiKey: env.API_KEY_FIREBASE,
   authDomain: env.AUTH_DOMAIN_FIREBASE,
@@ -34,13 +36,20 @@ firebase.initializeApp(config);
 
 function App() {
     const isAuthing=useSelector(state=>state.user.isAuthing)
-    const dipath=useDispatch()  
+    const playList=useSelector(state=>state.user.playList)
+    const dispath=useDispatch()  
     useEffect(() => {
       const unregisterAuthObserver = firebase.auth().onAuthStateChanged( async (user) => {
         if(user?.isAnonymous){
           const data=await register(user)
         }
-        dipath(setUser(user))
+        dispath(setUser({user:user,playList:[]}))
+        if(playList.length===0){
+          const res=await getAllPlayList()
+          if(res.success){
+              dispath(setPlaylistAction(res.allPlayList))
+          }
+        }
       });
       return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     }, []);
@@ -54,9 +63,11 @@ function App() {
           <Route path="/me/play-list/:id" element={<PlayListDetail />}/>
           <Route path="/me/upload" element={<UploadSong />} />
           <Route path="/me" element={<Me />}/>
+          <Route path="/set-up" element={<Setup />}/>
+          <Route path="/music" element={<MusicList />}/>
           <Route path="/login" element={<Login />} />
-          <Route path="/not-login" element={<PageNotAvailable />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/not-login" element={<PageNotAvailable />} />
         </Routes>
       </>
     );

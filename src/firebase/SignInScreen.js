@@ -10,7 +10,6 @@ const uiConfig = {
     signInFlow: 'popup',
     signInSuccessUrl:'/',
     signInOptions: [
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     ],
 };

@@ -1,24 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import Wrapper from '../components/Wrapper';
-import {useSelector} from 'react-redux'
+import {useSelector,useDispatch} from 'react-redux'
 import {userInfor} from '../redux/selector/userInfor'
 import {useNavigate} from 'react-router-dom'
 import {BiSlideshow } from "react-icons/bi";
 import PlayListItem from '../components/PlayListItem'
 import {getAllPlayList} from '../api/user'
 import { AiFillPlusCircle } from "react-icons/ai";
+import {setPlaylistAction} from '../redux/action/user'
 
 function PlayList(props) {
     const userInfo=useSelector(userInfor)
+    const playList=useSelector(state=>state.user.playList)
     const navigate=useNavigate()
-    const [playList,setPlayList]=useState([])
+    const dispath=useDispatch()
     useEffect(async()=>{
         if(!userInfo){
             return navigate('/not-login')
         }
-        const data=await getAllPlayList({uid:userInfo.uid})
-        if(data.success){
-            setPlayList(data.allPlayList)
+        if(playList.length===0){
+            const data=await getAllPlayList()
+            if(data.success){
+                dispath(setPlaylistAction(data.allPlayList))
+            }
         }
     },[userInfo])
     return (

@@ -4,7 +4,6 @@ import env from "react-dotenv";
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
-console.log(env)
 const axiosClient = axios.create({
     baseURL: env.API_URL+'/api',
     paramsSerializer: params => queryString.stringify(params),

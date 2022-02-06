@@ -46,3 +46,10 @@ export const randomSong=(data=null)=>{
         payload:data
     }
 }
+
+export const setKeyboard=(data=null)=>{
+    return {
+        type:'SET_KEYBOARD',
+        payload:data
+    }
+}

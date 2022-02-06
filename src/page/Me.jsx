@@ -10,8 +10,11 @@ import {BiSlideshow } from "react-icons/bi";
 import PlayListItem from '../components/PlayListItem'
 import { AiFillPlusCircle } from "react-icons/ai";
 import CreatePlayList from '../components/CreatePlayList';
+import {setPlaylistAction} from '../redux/action/user'
 
 function Me(props) {
+    const playList=useSelector(state=>state.user.playList)
+    console.log(playList)
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -29,19 +32,20 @@ function Me(props) {
     const handleLogout=()=>{
         signOut(auth).then(() => {
             navigate('/')
-            dispath(setUser(null))
+            dispath(setUser({user:null,playList:[]}))
         }).catch((error) => {
             console.log(error)
         });
     }
-    const [playList,setPlayList]=useState([])
     useEffect(async()=>{
         if(!userInfo){
             navigate('/not-login')
         }
-        const data=await getAllPlayList()
-        if(data.success){
-            setPlayList(data.allPlayList)
+        if(playList.length===0){
+            const data=await getAllPlayList()
+            if(data.success){
+                dispath(setPlaylistAction(data.allPlayList))
+            }
         }
     },[userInfo])
     return (
@@ -71,7 +75,7 @@ function Me(props) {
                                     Tạo PlayList Mới
                                 </div>
                             </div>
-                            {playList.map(item=>(
+                            {playList?.map(item=>(
                                 <div className="col-lg-3 col-md-4 col-sm-6 word-space-normal" key={item._id}>
                                     <PlayListItem {...item}/>
                                 </div>))

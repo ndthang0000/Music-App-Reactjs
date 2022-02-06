@@ -12,6 +12,10 @@ export const getDetailPlayList=(data)=>{
     return axiosClient.get(`/me/play-list/detail/${data}`)
 }
 
+export const editPlayList=(data)=>{
+    return axiosClient.post(`/me/play-list/edit`,data)
+}
+
 export const createPlayList=(data)=>{
     return axiosClient.post(`/me/play-list/create`,data)
 }

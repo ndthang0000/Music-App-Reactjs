@@ -65,9 +65,11 @@ function NavBar(props,ref) {
                         <BiCloudUpload/>
                     </div>
                 </Link>
-                <div className='nav-bar-menu-sub-item'>
-                    <BiCog/>
-                </div>
+                <Link to='/set-up' style={{color:'white'}}>
+                    <div className='nav-bar-menu-sub-item'>
+                        <BiCog/>
+                    </div>
+                </Link>
                 <Link to={userInfo?'/me':'/login'} className='nav-bar-menu-sub-item avatar'>
                     <img src={userInfo?userInfo.photoURL:"/user-default.png"} alt="" />
                 </Link>

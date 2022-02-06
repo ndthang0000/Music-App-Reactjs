@@ -23,6 +23,7 @@ function PlayMusic(props) {
     const indexCurrentSong=useSelector(state=>state.playMusic.active)  // index of array
     const currentSong =music[indexCurrentSong]     // current song
 
+    const isKeyboard=useSelector(state=>state.playMusic.isKeyboard)
     const handlePlayPauseSong=()=>{
         if(isPlaying){
             songRef.current.pause()
@@ -101,6 +102,30 @@ function PlayMusic(props) {
             localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
         }
     },[currentSong])
+
+    useEffect(()=>{
+        const handleKeyCode=(e)=>{
+            if(e.target.nodeName==='BODY'){
+                if(e.keyCode===32){
+                    document.querySelector('.play').click()
+                }
+                if(e.keyCode===39){
+                    handleNextSong()
+                }
+                if(e.keyCode===37){
+                    handlePreviosSong()
+                }
+            }
+        }
+        if(isKeyboard){
+            window.addEventListener('keyup',handleKeyCode)
+        }else{
+            window.removeEventListener('keyup',handleKeyCode)
+        }
+        return ()=>{
+            window.removeEventListener('keyup',handleKeyCode)
+        }
+    },[isKeyboard]) 
     return (
         <>
             <div className='play-music'>
@@ -128,15 +153,15 @@ function PlayMusic(props) {
                             className={isRepeat===2?'icon-btn active':'icon-btn'}
                             onClick={handleRandom}
                         />
-                        <AiFillBackward className='icon-btn' onClick={handlePreviosSong}/>
-                        <div className="play">
-                            <div className="player-inner" onClick={handlePlayPauseSong}>
+                        <AiFillBackward className='icon-btn play-prev-song' onClick={handlePreviosSong}/>
+                        <div className="play" onClick={handlePlayPauseSong}>
+                            <div className="player-inner">
                                 {!isPlaying?
                                 <AiFillPlayCircle style={{cursor:'pointer',fontSize:'20px',color:'red'}} />:
                                 <AiFillPauseCircle style={{cursor:'pointer',fontSize:'20px',color:'red'}} />}
                             </div>
                         </div>
-                        <AiFillForward className='icon-btn' onClick={handleNextSong}/>
+                        <AiFillForward className='icon-btn play-next-song' onClick={handleNextSong}/>
                         <AiOutlineRetweet 
                             className={isRepeat===1?'icon-btn active':'icon-btn'} 
                             title='Phát lặp lại'

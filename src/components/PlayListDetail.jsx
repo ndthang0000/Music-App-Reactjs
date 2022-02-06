@@ -4,19 +4,52 @@ import Wrapper from './Wrapper';
 import {getDetailPlayList} from '../api/user'
 import moment from 'moment'
 import SongItem from './SongItem';
-import { BsFillFileEarmarkExcelFill, BsController } from "react-icons/bs";
+import { BsFillFileEarmarkExcelFill, BsController, BsFillPencilFill } from "react-icons/bs";
+import {useSelector, useDispatch} from 'react-redux'
+import {userInfor} from '../redux/selector/userInfor'
+import CreatePlayList from '../components/CreatePlayList';
+import {setList} from '../redux/action/playMusic'
+import {getAllPlayList} from '../api/user'
+import {setPlaylistAction} from '../redux/action/user'
 
 function PlayListDetail(props) {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const dispath=useDispatch()
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const userInfo=useSelector(userInfor)
     const [playlist,setPlaylist]=useState({playList:{},listSong:[]})
     const params=useParams()
     useEffect(async()=>{
         const data=await getDetailPlayList(params.id)
         if(data.success){
             setPlaylist({playList:data.playList,listSong:data.listSong})
+            const res=await getAllPlayList()
+            if(res.success){
+                dispath(setPlaylistAction(res.allPlayList))
+            }
         }
     },[])
     const handlePlayPlayList=()=>{
+        let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+        let randomNumber=Math.floor(Math.random() * playlist.listSong.length);
+        playMusic.playList=playlist.playList._id
+        playMusic.currentSong=playlist.randomNumber
+        localStorage.setItem('playMusic',JSON.stringify(playMusic))
+        dispath(setList({playList:playlist.listSong,index:randomNumber}))
+    }
+    const handleEditName=async(slug)=>{
+        let data=await getDetailPlayList(slug)
+        if(data.success){
+            setPlaylist({playList:data.playList,listSong:data.listSong})
 
+        }
     }
     return (
         <Wrapper>
@@ -25,6 +58,7 @@ function PlayListDetail(props) {
                     <img src={playlist.playList?.avatar} alt="" className='img'/>
                     <div className='name' style={{fontWeight:600}}>
                         {playlist.playList?.name}
+                        <BsFillPencilFill style={{marginLeft:10,cursor:'pointer'}} onClick={handleClickOpen}/>
                     </div>
                     <div className='time'>Tạo lúc : {moment(playlist.playList?.createdAt).format('LL')}</div>
                     <div className='time'>{playlist.playList?.isPublic?'Công Khai':'Riêng Tư'}</div>
@@ -43,6 +77,16 @@ function PlayListDetail(props) {
                     </div>
                 </div>
             </div>
+            <CreatePlayList 
+                open={open} 
+                handleClose={handleClose} 
+                userInfo={userInfo}
+                defaultValue={playlist.playList.name}
+                defaultIsPublic={playlist.playList.isPublic}
+                _id={playlist.playList._id}
+                handleEditName={handleEditName}
+                edit
+            />
         </Wrapper>
     );
 }

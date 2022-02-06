@@ -1,10 +1,16 @@
-
+let setting=JSON.parse(localStorage.getItem('setting'))
+if(!setting){
+    setting={
+        keyboard:false
+    }
+    localStorage.setItem('setting',JSON.stringify(setting))
+}
 const initState={
     music:[], // play List
     active:0, // index of play List
-    currentSong:null // current Song
+    currentSong:null, // current Song
+    isKeyboard:setting.keyboard
 }
-
 const playMusic=(state=initState,action)=>{
     switch(action.type){
         case 'NEXT_SONG':
@@ -26,6 +32,7 @@ const playMusic=(state=initState,action)=>{
             }
         case 'SET_LIST_SONG': // top 100 song popular
             return {
+                ...state,
                 music:action.payload.playList,
                 active:action.payload.index||0,
                 currentSong:action.payload.playList[action.payload.index]||action.payload.playList[0]
@@ -45,6 +52,11 @@ const playMusic=(state=initState,action)=>{
             return {
                 ...state,
                 music:newMusic
+            }
+        case 'SET_KEYBOARD':
+            return {
+                ...state,
+                isKeyboard:action.payload
             }
         default:
             return state

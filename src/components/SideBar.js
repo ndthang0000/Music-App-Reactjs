@@ -1,26 +1,37 @@
 import React from 'react';
 import { BiHomeCircle,BiMusic,BiUser,BiSearch,BiLike,BiSlideshow } from "react-icons/bi";
 import { Link } from 'react-router-dom';
+import { BsMusicNoteList } from "react-icons/bs";
+import { useLocation  } from 'react-router-dom';
+
+const menu=[
+    {icon:<BiHomeCircle/>,name:'Trang chủ',link:'/'},
+    {icon:<BsMusicNoteList/>,name:'Danh sách chờ',link:'/music'},
+    {icon:<BiUser/>,name:'Cá nhân',link:'/me'},
+]
 function SideBar(props) {
+    const location=useLocation ()
     console.log('Sidebar re-render')
+    const checkActive=(link)=>{
+        let data='/'+location.pathname.split('/')[1]
+        if(data===link)
+            return true
+        return false
+    }
     return (
         <div className='side-bar-menu'>
             <div className="side-bar-menu-logo">
                 <img src="/logo.png" alt=""/>
             </div>
             <div className="side-bar-menu-list">
-                <Link to='/'>
-                    <div className="side-bar-menu-item">
-                        <BiHomeCircle/>
-                        <span>Trang chủ</span>
-                    </div>
-                </Link>
-                <Link to='/me'>
-                    <div className="side-bar-menu-item">
-                        <BiUser/>
-                        <span>Cá Nhân</span>
-                    </div>
-                </Link>
+                {menu.map(item=>
+                    (<Link to={item.link} key={item.link} >
+                        <div className={checkActive(item.link)?'side-bar-menu-item active':'side-bar-menu-item'}>
+                            {item.icon}
+                            <span>{item.name}</span>
+                        </div>
+                    </Link>)
+                )}
                 <div className="side-bar-menu-item">
                     <BiSearch/>
                     <span>Tìm kiếm</span>

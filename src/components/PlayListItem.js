@@ -21,6 +21,7 @@ export default function MultiActionAreaCard({name,listSong,avatar,slug}) {
                         <CardContent>
                         <Typography gutterBottom variant="h5" component="div" className='name truncate'>
                             {name}
+                            
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             - Có {listSong.length} bài hát

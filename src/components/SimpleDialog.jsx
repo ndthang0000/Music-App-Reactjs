@@ -9,7 +9,7 @@ import Dialog from '@mui/material/Dialog';
 import PersonIcon from '@mui/icons-material/Person';
 import { blue } from '@mui/material/colors';
 import {getAllPlayList} from '../api/user'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {userInfor} from '../redux/selector/userInfor'
 import Checkbox from '@mui/material/Checkbox';
@@ -19,25 +19,15 @@ import env from "react-dotenv";
 import Toastify from 'toastify-js'
 import {addPlayList} from '../api/user'
 import "toastify-js/src/toastify.css"
+import {setPlaylistAction} from '../redux/action/user'
 
 function SimpleDialog(props) {
-
     const userInfo=useSelector(userInfor)
-    const navigate=useNavigate()
-    const [playList,setPlayList]=useState([])
-    useEffect(async()=>{
-        if(!userInfo){
-            return navigate('/not-login')
-        }
-        const data=await getAllPlayList({uid:userInfo.uid})
-        if(data.success){
-            setPlayList(data.allPlayList)
-        }
-    },[userInfo])
-
+    const playList=useSelector(state=>state.user.playList)
+    const dispath=useDispatch()
     const { onClose, open } = props;
     const [checked,setChecked]=useState({})
-
+    
     const handleClose = () => {
         onClose();
     };
@@ -74,15 +64,33 @@ function SimpleDialog(props) {
                 }
             }).showToast();
             onClose();
+            const res=await getAllPlayList()
+            if(res.success){
+                dispath(setPlaylistAction(res.allPlayList))
+            }
         }
     }
+    const handleRememberChecked=(id,index)=>{
+        if(playList.length>0){
+            if(playList[index].listSong.indexOf(props.idSong)>=0){
+                return true
+            }
+        }
+        return false
+    }
+    
     return (
         <Dialog onClose={handleClose} open={open} className='dialog'>
             <DialogTitle>Chọn PlayList</DialogTitle>
             <List sx={{ pt: 0 }}>
-                {playList?.map((item) => (
+                {playList?.map((item,index) => (
                 <ListItem key={item._id}>
-                    <Checkbox color="secondary" onChange={handleCheckBoxChange} name={item._id}/>
+                    <Checkbox color="secondary" 
+                        onChange={handleCheckBoxChange} 
+                        name={item._id} 
+                        defaultChecked ={handleRememberChecked(item._id,index)}
+                        disabled={handleRememberChecked(item._id,index)}
+                    />
                     <ListItemAvatar>
                         <Avatar sx={{ bgcolor: blue[100], color: blue[600]}}  src={item.avatar}>
                             <PersonIcon />
