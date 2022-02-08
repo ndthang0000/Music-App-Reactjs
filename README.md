@@ -5,9 +5,9 @@
 Create `.env` file
 
 ```
-API_URL=https://app-music-mp3.herokuapp.com/
-API_KEY_FIREBASE=YOUR_KEY
-AUTH_DOMAIN_FIREBASE=3000
+API_URL=https://app-music-mp3.herokuapp.com
+API_KEY_FIREBASE= you can create firebase project and get api key
+AUTH_DOMAIN_FIREBASE=  you can create firebase project and get api key
 ```
 ## Back end
 https://github.com/ndthang0000/app-music-backend
