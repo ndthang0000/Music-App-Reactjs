@@ -1,3 +1,16 @@
+# APP MUSIC FRONT-END
+
+## Environment Variables
+
+Create `.env` file
+
+```
+API_URL=https://app-music-mp3.herokuapp.com/
+API_KEY_FIREBASE=YOUR_KEY
+AUTH_DOMAIN_FIREBASE=3000
+```
+## Back end
+https://github.com/ndthang0000/app-music-backend
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
