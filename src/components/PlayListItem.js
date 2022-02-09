@@ -19,7 +19,7 @@ export default function MultiActionAreaCard({name,listSong,avatar,slug}) {
                         alt="green iguana"
                         />
                         <CardContent>
-                        <Typography gutterBottom variant="h5" component="div" className='name truncate'>
+                        <Typography gutterBottom variant="h6" component="div" className='name truncate'>
                             {name}
                             
                         </Typography>

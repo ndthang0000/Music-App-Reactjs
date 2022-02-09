@@ -3,7 +3,13 @@
 * {
   padding: 0;
   margin: 0;
-  word-spacing: -3px;
+  word-spacing: -2px;
+}
+
+.special-text {
+  font-weight: 650;
+  font-size: 20px;
+  color: #00CDAC;
 }
 
 .text-error {
@@ -1468,7 +1474,9 @@ a {
   border-radius: 20px;
   display: block;
   position: relative;
-  width: 260px;
+  width: 50%;
+  margin: 10px auto;
+  height: 50px;
 }
 
 .play-list .create-play-list .add-area {

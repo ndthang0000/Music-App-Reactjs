@@ -1,5 +1,5 @@
 import React, { useEffect, useRef,useState } from 'react';
-import { AiOutlineMore } from "react-icons/ai";
+import { AiOutlineMore, AiOutlineDelete, AiTwotoneDelete } from "react-icons/ai";
 import { BsFillCollectionPlayFill,BsHeadphones } from "react-icons/bs";
 import color from '../color'
 import Avatar from '@mui/material/Avatar';
@@ -11,8 +11,24 @@ import {BiSlideshow,BiDownload,BiBellMinus } from "react-icons/bi";
 import { BsHeartFill } from "react-icons/bs";
 import SimpleDialog from './SimpleDialog';
 import env from "react-dotenv";
+import {userInfor} from '../redux/selector/userInfor'
+import {useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
-function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,isActive,view}) {
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,isActive,view,isEdit,handleDeleteSong}) {
+    const userInfo=useSelector(userInfor)
+    const navigate=useNavigate()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +37,9 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
         setAnchorEl(event.currentTarget);
     };
     const handleOpenDiaLog = () => {
+        if(!userInfo){
+            return navigate('not-login')
+        }
         setIsOpen(true);
     };
 
@@ -31,6 +50,18 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+
+    const [openDelete,setOpenDelete]=useState(false)
+    const handleOpenDeleteLog = () => {
+        setOpenDelete(true);
+    };
+    
+    const handleCloseDeleteLog = () => {
+        setOpenDelete(false);
+    };
+
+
     const listSongRef=useRef(null)
     useEffect(()=>{
         listSongRef.current.addEventListener('mouseover',(e)=>{
@@ -52,6 +83,10 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
             //listSongRef.current.removeEventListener('mouseover')
         }
     },[])
+    const handleSendApiDeleteSong=async(e)=>{
+        await handleDeleteSong(id); 
+        handleCloseDeleteLog()
+    }
     return (
         <div 
             className={isActive===index?'list-song-item active':'list-song-item'} 
@@ -85,7 +120,34 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
                 <div className='icon' onClick={handleClick}>
                     <AiOutlineMore />
                 </div>
+                {isEdit&&
+                <div className='icon' style={{marginLeft:10}} onClick={handleOpenDeleteLog}>
+                    <AiOutlineDelete />
+                </div>
+                }
             </div>
+            <Dialog
+                open={openDelete}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleCloseDeleteLog}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle className='word-space-normal'>
+                    <AiTwotoneDelete/>
+                    "Bạn muốn xóa <span className='special-text'>{name}</span> ra khỏi PlayList?"
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" className='word-space-normal'>
+                        Bạn sẽ không thể khôi phục nếu nhấn Đồng Ý
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDeleteLog} variant="outlined" color="error">Hủy bỏ</Button>
+                    <Button onClick={handleSendApiDeleteSong} variant="contained" color="success" >Đồng Ý</Button>
+                </DialogActions>
+            </Dialog>
+
             <SimpleDialog
                 open={isOpen}
                 onClose={handleCloseDiaLog}

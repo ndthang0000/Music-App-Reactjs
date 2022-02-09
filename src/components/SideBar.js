@@ -44,7 +44,7 @@ function SideBar(props) {
             <div className='side-bar-hr'>
             </div>
             <div className="side-bar-menu-sub-list">
-                <Link to='me' className="side-bar-menu-item">
+                <Link to='/me' className="side-bar-menu-item">
                     <div className='side-bar-menu-playlist'>
                         <BiSlideshow/>
                     </div>
@@ -52,14 +52,16 @@ function SideBar(props) {
                     Playlist
                     </span>
                 </Link>
-                <div className="side-bar-menu-item">
-                    <div className='side-bar-menu-playlist rencent'>
-                        <BiMusic/>
+                <Link to='/recently'>
+                    <div className="side-bar-menu-item">
+                        <div className='side-bar-menu-playlist rencent'>
+                            <BiMusic/>
+                        </div>
+                        <span>
+                        Nghe gần đây
+                        </span>
                     </div>
-                    <span>
-                    Nghe gần đây
-                    </span>
-                </div>
+                </Link>
             </div>
             <div className="side-bar-menu-vip">
                 <p>Nghe nhạc chất lượng cao và không quảng cáo</p>

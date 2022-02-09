@@ -23,6 +23,9 @@ export const createPlayList=(data)=>{
 export const addPlayList=(data)=>{
     return axiosClient.post(`/me/play-list/add`,data)
 }
+export const deleteSongFromPlayList=(data)=>{
+    return axiosClient.post(`/me/play-list/song/delete`,data)
+}
 
 export const upload=(data)=>{
     return axiosClient.post('/me/upload',data)

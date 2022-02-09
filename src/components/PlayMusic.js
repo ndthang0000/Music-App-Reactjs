@@ -102,7 +102,30 @@ function PlayMusic(props) {
             localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
         }
     },[currentSong])
-
+    useEffect(()=>{
+        if(currentSong){
+            let recentlySong=JSON.parse(localStorage.getItem('recentlySong'))
+            if(!recentlySong){
+                recentlySong=[currentSong._id]
+            }
+            else{
+                if(recentlySong.indexOf(currentSong._id)>=0){
+                    recentlySong.splice(recentlySong.indexOf(currentSong._id),1)
+                    recentlySong.unshift(currentSong._id)
+                }
+                else{
+                    if(recentlySong.length>20){
+                        recentlySong.pop()
+                        recentlySong.unshift(currentSong._id)
+                    }else{
+                        recentlySong.unshift(currentSong._id)
+                    }
+                }
+            }
+            localStorage.setItem('recentlySong',JSON.stringify(recentlySong))
+        }
+        
+    },[currentSong])
     useEffect(()=>{
         const handleKeyCode=(e)=>{
             if(e.target.nodeName==='BODY'){

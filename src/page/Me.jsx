@@ -75,8 +75,10 @@ function Me(props) {
                                     Tạo PlayList Mới
                                 </div>
                             </div>
+                        </div>
+                        <div className="row" style={{gap:0}}>
                             {playList?.map(item=>(
-                                <div className="col-lg-3 col-md-4 col-sm-6 word-space-normal" key={item._id}>
+                                <div className="col-lg-2 col-md-3 col-sm-6 word-space-normal" key={item._id}>
                                     <PlayListItem {...item}/>
                                 </div>))
                             }

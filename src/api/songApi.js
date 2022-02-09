@@ -21,3 +21,7 @@ export const getIsLove=(data)=>{
 export const setLove=(data)=>{
     return axiosClient.get(`/song/set-love/${data.idSong}`)
 }
+
+export const getRecentlyListSong=(data)=>{
+    return axiosClient.post(`/song/recently`,data)
+}

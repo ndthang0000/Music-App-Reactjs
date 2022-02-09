@@ -6,7 +6,6 @@ const initState={
 }
 
 const user=(state=initState,action)=>{
-    console.log(action)
     switch(action.type){
         case 'SET_USER':
             return {

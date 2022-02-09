@@ -20,6 +20,7 @@ import Me from './page/Me';
 import MusicList from './page/MusicList'
 import PlayListDetail from './components/PlayListDetail';
 import Setup from './page/Setup'
+import RecentlySong from './page/RecentlySong';
 
 const config = {
   apiKey: env.API_KEY_FIREBASE,
@@ -63,6 +64,7 @@ function App() {
           <Route path="/me/play-list/:id" element={<PlayListDetail />}/>
           <Route path="/me/upload" element={<UploadSong />} />
           <Route path="/me" element={<Me />}/>
+          <Route path="/recently" element={<RecentlySong />}/>
           <Route path="/set-up" element={<Setup />}/>
           <Route path="/music" element={<MusicList />}/>
           <Route path="/login" element={<Login />} />

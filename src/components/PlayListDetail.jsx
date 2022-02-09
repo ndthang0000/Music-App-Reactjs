@@ -11,6 +11,7 @@ import CreatePlayList from '../components/CreatePlayList';
 import {setList} from '../redux/action/playMusic'
 import {getAllPlayList} from '../api/user'
 import {setPlaylistAction} from '../redux/action/user'
+import {deleteSongFromPlayList} from '../api/user'
 
 function PlayListDetail(props) {
     const [open, setOpen] = useState(false);
@@ -51,6 +52,13 @@ function PlayListDetail(props) {
 
         }
     }
+    const handleDeleteSong=async(songId)=>{
+        const res=await deleteSongFromPlayList({songId:songId,playListId:playlist.playList._id})
+        let newListSong=playlist.listSong.filter(item=>item._id!==songId)
+        if(res.success){
+            setPlaylist({playList:res.playList,listSong:newListSong})
+        }
+    }
     return (
         <Wrapper>
             <div className="row play-list-detail">
@@ -58,7 +66,7 @@ function PlayListDetail(props) {
                     <img src={playlist.playList?.avatar} alt="" className='img'/>
                     <div className='name' style={{fontWeight:600}}>
                         {playlist.playList?.name}
-                        <BsFillPencilFill style={{marginLeft:10,cursor:'pointer'}} onClick={handleClickOpen}/>
+                        <BsFillPencilFill style={{marginLeft:10,cursor:'pointer',color:'#fa8231'}} onClick={handleClickOpen}/>
                     </div>
                     <div className='time'>Tạo lúc : {moment(playlist.playList?.createdAt).format('LL')}</div>
                     <div className='time'>{playlist.playList?.isPublic?'Công Khai':'Riêng Tư'}</div>
@@ -68,7 +76,7 @@ function PlayListDetail(props) {
                     <BsController className='icon-play'/>Phát Ngẩu Nhiên tất cả</div>
                     <div className='list-song'>
                         {playlist.listSong.length>0?
-                        playlist.listSong.map((item,index)=><SongItem {...item} index={index} key={index} active={-1}/>):
+                        playlist.listSong.map((item,index)=><SongItem {...item} index={index} key={index} active={-1} isEdit handleDeleteSong={handleDeleteSong}/>):
                         (<div className='empty-song'>
                             <BsFillFileEarmarkExcelFill className='icon'/>
                             Chưa có bài hát nào
