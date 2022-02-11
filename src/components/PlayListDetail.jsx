@@ -32,6 +32,7 @@ function PlayListDetail(props) {
         if(data.success){
             setPlaylist({playList:data.playList,listSong:data.listSong})
             const res=await getAllPlayList()
+            console.log(res)
             if(res.success){
                 dispath(setPlaylistAction(res.allPlayList))
             }

@@ -45,7 +45,6 @@ function Love({id,source,name,avatar,view,love}) {
     },[id,userInfo])
     const handleSetLove=async(e)=>{
         if(!userInfo){
-            console.log(' m vo day af vdsdfgdf g fgfdddddddddddddddd gggggggggggggggg      sgd hfgjghhgjhgjg ghjhgj')
             return navigate('/not-login')
         }
         e.target.style.pointerEvents='none'

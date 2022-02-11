@@ -39,7 +39,7 @@ function Me(props) {
     }
     useEffect(async()=>{
         if(!userInfo){
-            navigate('/not-login')
+            return navigate('/not-login')
         }
         if(playList.length===0){
             const data=await getAllPlayList()

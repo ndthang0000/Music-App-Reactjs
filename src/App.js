@@ -22,6 +22,7 @@ import PlayListDetail from './components/PlayListDetail';
 import Setup from './page/Setup'
 import RecentlySong from './page/RecentlySong';
 import "toastify-js/src/toastify.css"
+import {userInfor} from './redux/selector/userInfor'
 
 const config = {
   apiKey: env.API_KEY_FIREBASE,
@@ -39,22 +40,30 @@ firebase.initializeApp(config);
 function App() {
     const isAuthing=useSelector(state=>state.user.isAuthing)
     const playList=useSelector(state=>state.user.playList)
+    const userInfo=useSelector(userInfor)
     const dispath=useDispatch()  
     useEffect(() => {
       const unregisterAuthObserver = firebase.auth().onAuthStateChanged( async (user) => {
-        if(user?.isAnonymous){
-          const data=await register(user)
-        }
-        dispath(setUser({user:user,playList:[]}))
-        if(playList.length===0){
-          const res=await getAllPlayList()
-          if(res.success){
-              dispath(setPlaylistAction(res.allPlayList))
+        if(user){
+          if(user?.isAnonymous){
+            await register(user)
           }
+          dispath(setUser({user:user,playList:[]}))
+        }
+        else{
+          dispath(setUser({user:null,playList:[]}))
         }
       });
       return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
     }, []);
+    useEffect(async()=>{
+      if(playList.length===0&&userInfo){
+        const res=await getAllPlayList()
+        if(res.success){
+            dispath(setPlaylistAction(res.allPlayList))
+        }
+      }
+    },[userInfo,playList])
   if(!isAuthing){
     return (
       <>

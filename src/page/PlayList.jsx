@@ -20,6 +20,7 @@ function PlayList(props) {
         }
         if(playList.length===0){
             const data=await getAllPlayList()
+            console.log(data)
             if(data.success){
                 dispath(setPlaylistAction(data.allPlayList))
             }
