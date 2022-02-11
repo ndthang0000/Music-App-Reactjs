@@ -40,10 +40,12 @@ function PlayListDetail(props) {
     const handlePlayPlayList=()=>{
         let playMusic=JSON.parse(localStorage.getItem('playMusic'))
         let randomNumber=Math.floor(Math.random() * playlist.listSong.length);
-        playMusic.playList=playlist.playList._id
         playMusic.currentSong=playlist.randomNumber
         localStorage.setItem('playMusic',JSON.stringify(playMusic))
-        dispath(setList({playList:playlist.listSong,index:randomNumber}))
+        dispath(setList({
+            playList:playlist.listSong,
+            index:randomNumber
+        }))
     }
     const handleEditName=async(slug)=>{
         let data=await getDetailPlayList(slug)
@@ -76,7 +78,7 @@ function PlayListDetail(props) {
                     <BsController className='icon-play'/>Phát Ngẩu Nhiên tất cả</div>
                     <div className='list-song'>
                         {playlist.listSong.length>0?
-                        playlist.listSong.map((item,index)=><SongItem {...item} index={index} key={index} active={-1} isEdit handleDeleteSong={handleDeleteSong}/>):
+                        playlist.listSong.map((item,index)=><SongItem data={item} {...item} index={index} key={index} active={-1} isEdit handleDeleteSong={handleDeleteSong}/>):
                         (<div className='empty-song'>
                             <BsFillFileEarmarkExcelFill className='icon'/>
                             Chưa có bài hát nào

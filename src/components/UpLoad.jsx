@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Toastify from 'toastify-js'
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BsMusicNoteBeamed, BsCardImage } from "react-icons/bs";
@@ -6,22 +6,24 @@ import FileSongInfor from '../components/FileSongInfor'
 import FileImageInfor from '../components/FileImageInfor'
 import { useForm } from "react-hook-form";
 import {upload} from '../api/user'
-import {useDispatch } from 'react-redux';
-import {appendSongInList} from '../redux/action/playMusic'
 import "toastify-js/src/toastify.css"
 import env from "react-dotenv";
+import {getNation} from '../api/songApi'
 
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import {getListSong} from '../api/songApi'
+
 function UpLoad(props) {
-    const dispath=useDispatch()
     const [song,setSong]=useState(null)
     const [image,setImage]=useState(null)
     const [isValid,setIsValid]=useState({song:false,image:false})
     const [open, setOpen] = useState(false);
     const [singerName,setSingerName]=useState('')
     const [name,setName]=useState('')
+    const [nationList,setNationList]=useState([])
+    const [nation,setNation]=useState('')
     const urlRef=useRef(null)
     const tempAudioRef=useRef(null)
     const { register, handleSubmit } = useForm();
@@ -55,11 +57,11 @@ function UpLoad(props) {
         formData.append('image',image)
         formData.append('singer',data.singer)
         formData.append('name',data.name)
+        formData.append('nation',nation)
         formData.append('duration',tempAudioRef.current.duration)
         setOpen(true)
         const res=await upload(formData)
         setOpen(false)
-        console.log(res)
         if(res){
             setSong(null)
             setImage(null)
@@ -80,9 +82,19 @@ function UpLoad(props) {
                     background: "linear-gradient(to right, #00b09b, #96c93d)",
                 }
             }).showToast();
-            dispath(appendSongInList(res.song))
+            let newData=await getListSong()
         }
     }
+    const handleRadioChange=(e)=>{
+        setNation(e.target.value)
+    }
+    
+    useEffect(async()=>{
+        const res=await getNation()
+        if(res.success){
+            setNationList(res.allNation)
+        }
+    },[])
     return (
         <div>
             <div className="container">
@@ -131,22 +143,12 @@ function UpLoad(props) {
                         </div>
                         <div className="form-group">
                             <div className='text-white text-bold'>Chọn dòng nhạc</div>
-                            <div className="radio">
-                                <label htmlFor="nation">Việt Nam</label>
-                                <input type="radio" name="nation" id="" value='VN'/>
-                            </div>
-                            <div className="radio">
-                                <label htmlFor="nation">US-UK</label>
-                                <input type="radio" name="nation" id="" value='US-UK'/>
-                            </div>
-                            <div className="radio">
-                                <label htmlFor="nation">Korea</label>
-                                <input type="radio" name="nation" id="" value='KOREA'/>
-                            </div>
-                            <div className="radio">
-                                <label htmlFor="nation">China</label>
-                                <input type="radio" name="nation" id="" value='CHINA'/>
-                            </div>
+                            {nationList.map(item=>(
+                                <div className="radio">
+                                    <label htmlFor="nation">{item.name}</label>
+                                    <input type="radio" name="nation" id="" value={item._id} onChange={handleRadioChange}/>
+                                </div>
+                            ))}
                         </div>
                         <button type='submit' className="btn-upload" style={styleButton()}>Đăng nhạc </button>
                     </div>

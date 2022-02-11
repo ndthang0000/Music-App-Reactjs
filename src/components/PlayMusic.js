@@ -8,7 +8,7 @@ import { AiFillAndroid,
         AiFillPauseCircle } from "react-icons/ai";
 import AudioSong from './AudioSong';
 import Volumn from './Volumn';
-import {getListSong,getPlayListSong} from '../api/songApi';
+import {getListSong, getPlayListSong, getRecentlyListSong} from '../api/songApi';
 import {setList,nextSong, preSong} from '../redux/action/playMusic'
 import env from "react-dotenv";
 import Love from './Love';
@@ -22,7 +22,6 @@ function PlayMusic(props) {
     const music=useSelector(state=>state.playMusic.music) // array
     const indexCurrentSong=useSelector(state=>state.playMusic.active)  // index of array
     const currentSong =music[indexCurrentSong]     // current song
-
     const isKeyboard=useSelector(state=>state.playMusic.isKeyboard)
     const handlePlayPauseSong=()=>{
         if(isPlaying){
@@ -64,35 +63,50 @@ function PlayMusic(props) {
     useEffect(async()=>{
         if(music.length===0){
             let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+            const data=await getListSong()
             if(!playMusic){
-                const data=await getListSong()
+                let temp=data.map(item=>item._id)
                 let newPlayMusic={
                     volume:1,   // volume
                     currentSong:0, // currentSong
-                    playList:'',     // '' is top 100 else is playList
+                    playList:temp,     // array
                 }
                 localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
                 dispath(setList({playList:data,index:0}))
             }
             else{
-                if(!playMusic.playList){
-                    const data=await getListSong()
-                    dispath(setList({playList:data,index:playMusic.currentSong}))
+                if(Array.isArray(playMusic.playList)&&playMusic.playList.length>0){
+                    const listSong=await getRecentlyListSong({listSong:playMusic.playList})
+                    dispath(setList({
+                        playList:listSong.recentlySong,
+                        index:playMusic.currentSong,
+                    }))
                 }
                 else{
-                    const data=await getPlayListSong(playMusic.playList)
-                    if(data){
-                        dispath(setList({playList:data,index:playMusic.currentSong}))
-                    }
-                    else{
-                        const newData=await getListSong()
-                        dispath(setList({playList:newData,index:playMusic.currentSong}))
-                    }
+                    dispath(setList({
+                        playList:data,
+                        index:playMusic.currentSong,
+                    }))
                 }
+                // else{
+                //     const data=await getListSong()
+                //     const listSong=await getRecentlyListSong(playMusic.playList)
+                //     if(data){
+                //         dispath(setList({
+                //             playList:listSong.recentlySong,
+                //             index:playMusic.currentSong,
+                //             top100:data
+                //         }))
+                //     }
+                //     // else{
+                //     //     const newData=await getListSong()
+                //     //     dispath(setList({playList:newData,index:playMusic.currentSong}))
+                //     // }
+                // }
             }
         }
     },[])
-    useEffect(()=>{
+    useEffect(()=>{  // set index current song
         let playMusic=JSON.parse(localStorage.getItem('playMusic'))
         if(playMusic){
             let newPlayMusic={
@@ -102,7 +116,7 @@ function PlayMusic(props) {
             localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
         }
     },[currentSong])
-    useEffect(()=>{
+    useEffect(()=>{  // recently list song
         if(currentSong){
             let recentlySong=JSON.parse(localStorage.getItem('recentlySong'))
             if(!recentlySong){
@@ -126,7 +140,7 @@ function PlayMusic(props) {
         }
         
     },[currentSong])
-    useEffect(()=>{
+    useEffect(()=>{   // key board setting
         const handleKeyCode=(e)=>{
             if(e.target.nodeName==='BODY'){
                 if(e.keyCode===32){

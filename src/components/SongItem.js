@@ -1,37 +1,41 @@
-import React, { useEffect, useRef,useState } from 'react';
-import { AiOutlineMore, AiOutlineDelete, AiTwotoneDelete } from "react-icons/ai";
-import { BsFillCollectionPlayFill,BsHeadphones } from "react-icons/bs";
-import color from '../color'
 import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import {BiSlideshow,BiDownload,BiBellMinus } from "react-icons/bi";
-import { BsHeartFill } from "react-icons/bs";
-import SimpleDialog from './SimpleDialog';
-import env from "react-dotenv";
-import {userInfor} from '../redux/selector/userInfor'
-import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Slide from '@mui/material/Slide';
+import React, { useEffect, useRef, useState } from 'react';
+import env from "react-dotenv";
+import { AiOutlineDelete, AiOutlineMore, AiTwotoneDelete } from "react-icons/ai";
+import { BiBellMinus, BiDownload, BiSlideshow } from "react-icons/bi";
+import { BsFillCollectionPlayFill, BsHeadphones, BsHeartFill, BsMusicNoteList } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import color from '../color';
+import { deleteSongMusic, addReadyNextSong } from '../redux/action/playMusic';
+import { userInfor } from '../redux/selector/userInfor';
+import SimpleDialog from './SimpleDialog';
+import Toastify from 'toastify-js'
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,isActive,view,isEdit,handleDeleteSong}) {
+function SongItem({data,love,source,_id:id,avatar,singerName,name,index,changeSong,isActive,view,isEdit,handleDeleteSong,handleAppendPlaySong,isRemove}) {
     const userInfo=useSelector(userInfor)
     const navigate=useNavigate()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [isOpen, setIsOpen] = useState(false);
+
+    const dispatch=useDispatch()
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -84,14 +88,34 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
         }
     },[])
     const handleSendApiDeleteSong=async(e)=>{
-        await handleDeleteSong(id); 
+        if(!isRemove){
+            await handleDeleteSong(id); 
+        }
+        else{
+            dispatch(deleteSongMusic(id))
+        }
         handleCloseDeleteLog()
+    }
+    const handleReadyNextSong=()=>{
+        dispatch(addReadyNextSong(data))
+        Toastify({
+            text: name+" sẽ được phát kế tiếp",
+            duration: 3000,
+            avatar: env.API_URL+avatar,
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+        }).showToast();
     }
     return (
         <div 
             className={isActive===index?'list-song-item active':'list-song-item'} 
             ref={listSongRef} 
-            data-index={index}
         >
             <div className="song-item-img">
                 <div className="index" style={{WebkitTextStrokeColor:color[index]||'#777'}}>
@@ -101,7 +125,7 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
                     <img src={env.API_URL+avatar} alt='' />
                     {isActive===index?
                         (<i className='icon-playing'></i>):
-                        (<BsFillCollectionPlayFill className='play-btn' onClick={changeSong}/>)
+                        (<BsFillCollectionPlayFill className='play-btn' onClick={(e)=>{if(changeSong){changeSong(e,index)} else {handleAppendPlaySong(index)} }}/>)
                     }
                 </div>
                 <div className="song-item-infor">
@@ -135,7 +159,7 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
             >
                 <DialogTitle className='word-space-normal'>
                     <AiTwotoneDelete/>
-                    "Bạn muốn xóa <span className='special-text'>{name}</span> ra khỏi PlayList?"
+                    "Bạn muốn xóa <span className='special-text'>{name}</span> {!isRemove?'ra khỏi PlayList':'ra khỏi danh sách chờ'}?"
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description" className='word-space-normal'>
@@ -222,6 +246,24 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
                         Thêm vào PlayList
                     </span>
                 </MenuItem>
+                <MenuItem onClick={handleReadyNextSong}>
+                    <ListItemIcon>
+                        <div 
+                            className='side-bar-menu-playlist' 
+                            style={{
+                                    marginRight:10, 
+                                    backgroundColor: '#3EECAC',
+                                    backgroundImage: 'linear-gradient(19deg, #3EECAC 0%, #EE74E1 100%)'
+                                }
+                            }
+                        >
+                            <BsMusicNoteList className='fs-20'/>
+                        </div>
+                    </ListItemIcon>
+                    <span className='word-space-normal'>
+                        Phát tiếp theo
+                    </span>
+                </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
                         <div 
@@ -240,7 +282,7 @@ function SongItem({love,source,_id:id,avatar,singerName,name,index,changeSong,is
                     </a>
                 </MenuItem>
                 <MenuItem>
-                <ListItemIcon>
+                    <ListItemIcon>
                         <div 
                             className='side-bar-menu-playlist' 
                             style={{

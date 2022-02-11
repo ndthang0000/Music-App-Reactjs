@@ -25,3 +25,7 @@ export const setLove=(data)=>{
 export const getRecentlyListSong=(data)=>{
     return axiosClient.post(`/song/recently`,data)
 }
+
+export const getNation=()=>{
+    return axiosClient.get(`/song/nation`)
+}

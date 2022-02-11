@@ -33,6 +33,13 @@ export const setList=(data=null)=>{
     }
 }
 
+export const playPlayList=(data=null)=>{
+    return {
+        type:'PLAY_PLAYLIST',
+        payload:data
+    }
+}
+
 export const appendSongInList=(data=null)=>{
     return {
         type:'APPEND_SONG',
@@ -43,6 +50,20 @@ export const appendSongInList=(data=null)=>{
 export const randomSong=(data=null)=>{
     return {
         type:'RANDOM_SONG',
+        payload:data
+    }
+}
+
+export const deleteSongMusic=(data=null)=>{
+    return {
+        type:'DELETE_SONG_MUSIC',
+        payload:data
+    }
+}
+
+export const addReadyNextSong=(data=null)=>{
+    return {
+        type:'ADD_READY_NEXT_SONG',
         payload:data
     }
 }

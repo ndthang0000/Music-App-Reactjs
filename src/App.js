@@ -21,6 +21,7 @@ import MusicList from './page/MusicList'
 import PlayListDetail from './components/PlayListDetail';
 import Setup from './page/Setup'
 import RecentlySong from './page/RecentlySong';
+import "toastify-js/src/toastify.css"
 
 const config = {
   apiKey: env.API_KEY_FIREBASE,
