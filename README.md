@@ -4,6 +4,7 @@
 
 ```
 https://mp5.netlify.app/
+if web page display none information, please refresh page after 5 second (error cause server is sleeping on heroku)
 ```
 ## Environment Variables
 
