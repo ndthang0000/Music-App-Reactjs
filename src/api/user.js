@@ -30,3 +30,19 @@ export const deleteSongFromPlayList=(data)=>{
 export const upload=(data)=>{
     return axiosClient.post('/me/upload',data)
 }
+
+export const follow=(data)=>{
+    return axiosClient.get(`/me/follow/${data}`)
+}
+
+export const isFollow=(data)=>{
+    return axiosClient.get(`/me/check-follow/${data}`)
+}
+
+export const unFollow=(data)=>{
+    return axiosClient.get(`/me/un-follow/${data}`)
+}
+
+export const editStory=(data)=>{
+    return axiosClient.post(`/me/story`,data)
+}

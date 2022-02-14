@@ -1345,6 +1345,10 @@ input {
   font-weight: 600;
 }
 
+.me-content .story {
+  color: white;
+}
+
 .me-content-control {
   position: absolute;
   top: 0px;
@@ -1677,6 +1681,12 @@ a {
 .set-up-content .set-up-content-item .guide {
   font-weight: 650;
   font-size: 20px;
+}
+
+.idol-tittle {
+  font-size: 35px;
+  color: white;
+  font-weight: 650;
 }
 
 @media (max-width: 1024px) {

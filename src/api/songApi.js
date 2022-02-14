@@ -1,8 +1,15 @@
 import axiosClient from "./axios"
+import qs from 'qs'
 
-
-export const getListSong=()=>{
-    return axiosClient.get('/song/get-list')
+export const getListSong=(number)=>{
+    return axiosClient.get('/song/get-list',{
+        params:{
+            page:number
+        },
+        paramsSerializer: (params) => {
+            return qs.stringify(params, { arrayFormat: 'repeat' })
+        },
+    })
 }
 
 

@@ -21,6 +21,8 @@ import MusicList from './page/MusicList'
 import PlayListDetail from './components/PlayListDetail';
 import Setup from './page/Setup'
 import RecentlySong from './page/RecentlySong';
+import Idols from './page/Idols';
+import IdolDetail from './page/IdolDetail';
 import "toastify-js/src/toastify.css"
 import {userInfor} from './redux/selector/userInfor'
 
@@ -72,6 +74,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/me/play-list/:id" element={<PlayListDetail />}/>
+          <Route path="/idol/:email" element={<IdolDetail />}/>
+          <Route path="/idol" element={<Idols />}/>
           <Route path="/me/upload" element={<UploadSong />} />
           <Route path="/me" element={<Me />}/>
           <Route path="/recently" element={<RecentlySong />}/>

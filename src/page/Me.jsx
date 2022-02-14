@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Wrapper from '../components/Wrapper';
 import {useSelector,useDispatch} from 'react-redux'
 import {userInfor} from '../redux/selector/userInfor'
@@ -11,23 +11,37 @@ import PlayListItem from '../components/PlayListItem'
 import { AiFillPlusCircle } from "react-icons/ai";
 import CreatePlayList from '../components/CreatePlayList';
 import {setPlaylistAction} from '../redux/action/user'
+import {getOneIdol} from '../api/idol'
+import { BsBrush } from "react-icons/bs";
+import { BiSave } from "react-icons/bi";
+import {editStory} from '../api/user'
+import Toastify from 'toastify-js'
 
 function Me(props) {
     const playList=useSelector(state=>state.user.playList)
-    console.log(playList)
     const [open, setOpen] = useState(false);
+    const [story,setStory]=useState('')
+    const storyRef=useRef(null)
+    const [isEditStory,setIsEditStory]=useState(false)
+
+    const auth=getAuth()
+    const userInfo=useSelector(userInfor)
+    const dispath=useDispatch()
+    const navigate=useNavigate()
+
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
+    const newLine = (a) => {
+        if (a) return a.replace(/\n/g, '<br />')
+    }
+
     const handleClose = () => {
         setOpen(false);
     };
-    const auth=getAuth()
-    const userInfo=useSelector(userInfor)
-    const dispath=useDispatch()
-    const navigate=useNavigate()
+
     
     const handleLogout=()=>{
         signOut(auth).then(() => {
@@ -36,6 +50,30 @@ function Me(props) {
         }).catch((error) => {
             console.log(error)
         });
+    }
+    const handleEditStory=(e)=>{
+        setIsEditStory(true)
+        storyRef.current.contentEditable=true
+        storyRef.current.focus()
+        storyRef.current.innerText=''
+        storyRef.current.innerText=story
+    }
+    const handleSaveStory=async(e)=>{
+        setIsEditStory(false)
+        storyRef.current.contentEditable=false
+        const res=await editStory({newStory:storyRef.current.innerText})
+        setStory(res.newStory)
+        if(res.success){
+            Toastify({
+                text: "Thay đổi Story thành công",
+                className: "info",
+                gravity: "bottom", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
+        }
     }
     useEffect(async()=>{
         if(!userInfo){
@@ -48,12 +86,33 @@ function Me(props) {
             }
         }
     },[userInfo])
+    useEffect(async()=>{
+        const res=await getOneIdol(userInfo.email)
+        setStory(res.idol.story)
+        storyRef.current.innerHTML=newLine(res.idol.story)
+    },[])
     return (
         <Wrapper>
                 <div className='me-content'>
                     <div className="text-center">
                         <img src={userInfo?.photoURL} alt="" className='avatar-area'/>
                         <h2 className='name'>{userInfo?.displayName}</h2>
+                        <div className='story'>
+                            <div style={{fontWeight:600}}>
+                                {isEditStory?
+                                <BiSave 
+                                    style={{cursor:'pointer',marginRight:10,color:'#e67e22',fontSize:20}}
+                                    onClick={handleSaveStory}
+                                />:
+                                <BsBrush 
+                                    style={{cursor:'pointer',marginRight:10,color:'#e67e22',fontSize:20}}
+                                    onClick={handleEditStory}
+                                />
+                                }
+                                Tiểu sử :
+                            </div>
+                            <span ref={storyRef} style={{paddingInline:10,fontStyle:'italic'}}></span>
+                        </div>
                         <div className='me-content-control'>
                             <div className='btn-upgrade vip'>Nâng cấp VIP</div>
                             <div className='btn-upgrade logout' onClick={handleLogout}>Đăng xuất</div>

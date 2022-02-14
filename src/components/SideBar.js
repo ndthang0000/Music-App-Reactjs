@@ -8,6 +8,8 @@ const menu=[
     {icon:<BiHomeCircle/>,name:'Trang chủ',link:'/'},
     {icon:<BsMusicNoteList/>,name:'Danh sách chờ',link:'/music'},
     {icon:<BiUser/>,name:'Cá nhân',link:'/me'},
+    {icon:<BiSearch/>,name:'Tìm kiếm',link:'/search'},
+    {icon:<BiLike/>,name:'Theo dõi',link:'/idol'},
 ]
 function SideBar(props) {
     const location=useLocation ()
@@ -32,14 +34,6 @@ function SideBar(props) {
                         </div>
                     </Link>)
                 )}
-                <div className="side-bar-menu-item">
-                    <BiSearch/>
-                    <span>Tìm kiếm</span>
-                </div>
-                <div className="side-bar-menu-item">
-                    <BiLike/>
-                    <span>Theo dõi</span>
-                </div>
             </div>
             <div className='side-bar-hr'>
             </div>

@@ -48,14 +48,14 @@ function Setup(props) {
                     <div className='set-up-content-item'>
                         <span className='guide'>
                         <BsFillArrowRightSquareFill className='icon'/>
-                        Next 
+                        Right Arrow 
                         </span>
                             : Chuyển sang bài hát tiếp theo
                     </div>
                     <div className='set-up-content-item'>
                         <span className='guide'>
                         <BsFillArrowLeftSquareFill className='icon'/>
-                        Space 
+                        Left Arrow 
                         </span>
                             : Chuyển sang bài hát trước đó
                     </div>
