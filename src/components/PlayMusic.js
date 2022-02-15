@@ -65,14 +65,14 @@ function PlayMusic(props) {
             let playMusic=JSON.parse(localStorage.getItem('playMusic'))
             const data=await getListSong()
             if(!playMusic){
-                let temp=data.map(item=>item._id)
+                let temp=data.allSong.map(item=>item._id)
                 let newPlayMusic={
                     volume:1,   // volume
                     currentSong:0, // currentSong
                     playList:temp,     // array
                 }
                 localStorage.setItem('playMusic',JSON.stringify(newPlayMusic))
-                dispath(setList({playList:data,index:0}))
+                dispath(setList({playList:data.allSong,index:0}))
             }
             else{
                 if(Array.isArray(playMusic.playList)&&playMusic.playList.length>0){
