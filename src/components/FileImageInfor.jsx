@@ -3,12 +3,16 @@ import React, { useEffect } from 'react';
 function FileImageInfor({name,url,type,setIsValid,isValid}) {
     useEffect(()=>{
         if(!type.includes('image')){
-            isValid.image=false
-            setIsValid(isValid)
+            setIsValid({
+                ...isValid,
+                image:false
+            })
         }
         else{
-            isValid.image=true
-            setIsValid(isValid)
+            setIsValid({
+                ...isValid,
+                image:true
+            })
         }
     },[])
     return (

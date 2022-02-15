@@ -173,7 +173,7 @@ input{
     left: $widthSideBar;
     right: 0;
     height: $heightSideBar;
-    z-index: 2;
+    z-index: 1000;
     @include flexContent(space-between,center);
     @include tablet(){
         left: 0;
@@ -192,6 +192,7 @@ input{
         flex-basis: 40%;
         margin-left: 50px;
         position: relative;
+        z-index: 100;
         @include mobile{
             display: none;
         }
@@ -209,6 +210,27 @@ input{
             &::placeholder{
                 color: rgb(209, 207, 207);
                 font-size: 14px;
+            }
+        }
+        .search-sub-menu{
+            position: absolute;
+            top: 35px;
+            left: 0px;
+            width: 100%;
+            background-color: #34495e;
+            padding: 0;
+            margin: 4px;
+            li{
+                list-style: none;
+                width: 100%;
+                color: white;
+                padding-inline: 25px;
+                padding-block: 6px;
+                padding-left: 10px;
+                cursor: pointer;
+                &:hover{
+                    background-color: $white-alpha-30;
+                }
             }
         }
         .search-icon{
@@ -982,6 +1004,30 @@ a{
         }
     }
 }
+.my-music{
+    margin-top: 50px;
+    .icon{
+        background-color: #0093E9;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    }
+    .btn-play-all {background-image: linear-gradient(to right, #D31027 0%, #EA384D  51%, #D31027  100%)}
+    .btn-play-all {
+        margin: 10px;
+        padding: 10px 25px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;            
+        box-shadow: 0 0 5px rgb(122, 121, 121);
+        border-radius: 10px;
+        display: block;
+        width: fit-content;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+}
 .play-list-detail{
     .img{
         width: 100%;
@@ -1108,10 +1154,38 @@ a{
 }
 .idol{
     &-tittle{
-        font-size: 35px;
+        font-size: 2rem;
         color: white;
         font-weight: 650;
     }
+    .story{
+        color: white;
+        width: 60%;
+        @include mobile(){
+            width: 100%;
+        }
+    }
+    .avatar{
+        border-radius: 50%;
+    }
+    .btn-follow{
+        width: fit-content;
+        padding: 8px 15px;
+        border-radius: 25px;
+        background-color: #7bb9f7;
+        background-image: linear-gradient(62deg, #68a0d8 0%, #E0C3FC 100%);
+        color: white;
+        cursor: pointer;
+    }
+    .quantity-follow{
+        color: white;
+        width: fit-content;
+        padding: 8px 15px;
+        border-radius: 25px;
+        background-color: $white-alpha-30;
+        margin-left: 20px;
+    }
+
 }
 @media (max-width:1024px){
     html{

@@ -8,7 +8,7 @@ const menu=[
     {icon:<BiHomeCircle/>,name:'Trang chủ',link:'/'},
     {icon:<BsMusicNoteList/>,name:'Danh sách chờ',link:'/music'},
     {icon:<BiUser/>,name:'Cá nhân',link:'/me'},
-    {icon:<BiSearch/>,name:'Tìm kiếm',link:'/search'},
+    //{icon:<BiSearch/>,name:'Tìm kiếm',link:'/search'},
     {icon:<BiLike/>,name:'Theo dõi',link:'/idol'},
 ]
 function SideBar(props) {

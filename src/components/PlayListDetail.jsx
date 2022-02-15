@@ -12,6 +12,7 @@ import {setList} from '../redux/action/playMusic'
 import {getAllPlayList} from '../api/user'
 import {setPlaylistAction} from '../redux/action/user'
 import {deleteSongFromPlayList} from '../api/user'
+import {appendSongInList} from '../redux/action/playMusic'
 
 function PlayListDetail(props) {
     const [open, setOpen] = useState(false);
@@ -20,7 +21,7 @@ function PlayListDetail(props) {
         setOpen(true);
     };
 
-    const dispath=useDispatch()
+    const dispatch=useDispatch()
     const handleClose = () => {
         setOpen(false);
     };
@@ -34,16 +35,16 @@ function PlayListDetail(props) {
             const res=await getAllPlayList()
             console.log(res)
             if(res.success){
-                dispath(setPlaylistAction(res.allPlayList))
+                dispatch(setPlaylistAction(res.allPlayList))
             }
         }
     },[])
     const handlePlayPlayList=()=>{
         let playMusic=JSON.parse(localStorage.getItem('playMusic'))
         let randomNumber=Math.floor(Math.random() * playlist.listSong.length);
-        playMusic.currentSong=playlist.randomNumber
+        playMusic.currentSong=randomNumber
         localStorage.setItem('playMusic',JSON.stringify(playMusic))
-        dispath(setList({
+        dispatch(setList({
             playList:playlist.listSong,
             index:randomNumber
         }))
@@ -62,6 +63,9 @@ function PlayListDetail(props) {
             setPlaylist({playList:res.playList,listSong:newListSong})
         }
     }
+    const handleAppendPlaySong=(index)=>{
+        dispatch(appendSongInList(playlist.listSong[index]))
+    }
     return (
         <Wrapper>
             <div className="row play-list-detail">
@@ -76,10 +80,12 @@ function PlayListDetail(props) {
                 </div>
                 <div className="col-lg-9 col-md-12 col-sm-12">
                     <div className='btn-play-all' onClick={handlePlayPlayList}>
-                    <BsController className='icon-play'/>Phát Ngẩu Nhiên tất cả</div>
+                        <BsController className='icon-play'/>
+                        Phát Ngẩu Nhiên tất cả
+                    </div>
                     <div className='list-song'>
                         {playlist.listSong.length>0?
-                        playlist.listSong.map((item,index)=><SongItem data={item} {...item} index={index} key={index} active={-1} isEdit handleDeleteSong={handleDeleteSong}/>):
+                        playlist.listSong.map((item,index)=><SongItem data={item} {...item} index={index} key={index} active={-1} isEdit handleDeleteSong={handleDeleteSong} handleAppendPlaySong={handleAppendPlaySong}/>):
                         (<div className='empty-song'>
                             <BsFillFileEarmarkExcelFill className='icon'/>
                             Chưa có bài hát nào

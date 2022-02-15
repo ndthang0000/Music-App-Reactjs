@@ -17,7 +17,6 @@ function Dashboard(props) {
     const dispatch=useDispatch()
     useEffect(async()=>{
         const data=await getListSong(pageRef.current)
-        console.log(data)
         if(data.success){
             pageRef.current+=1
             setMusic(data.allSong)

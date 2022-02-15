@@ -3,12 +3,16 @@ import React, { useEffect } from 'react';
 function FileSongInfor({name,size,type,setIsValid,isValid}) {
     useEffect(()=>{
         if(!type.includes('audio')){
-            isValid.song=false
-            setIsValid(isValid)
+            setIsValid({
+                ...isValid,
+                song:false
+            })
         }
         else{
-            isValid.song=true
-            setIsValid(isValid)
+            setIsValid({
+                ...isValid,
+                song:true
+            })
         }
     },[])
     return (

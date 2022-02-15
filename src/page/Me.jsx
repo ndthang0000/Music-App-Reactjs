@@ -12,10 +12,13 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import CreatePlayList from '../components/CreatePlayList';
 import {setPlaylistAction} from '../redux/action/user'
 import {getOneIdol} from '../api/idol'
-import { BsBrush } from "react-icons/bs";
+import { BsBrush, BsMusicNoteBeamed, BsFillFileEarmarkExcelFill, BsController } from "react-icons/bs";
 import { BiSave } from "react-icons/bi";
 import {editStory} from '../api/user'
 import Toastify from 'toastify-js'
+import { getMySong } from '../api/user'
+import SongItem from '../components/SongItem'
+import { appendSongInList, setList } from '../redux/action/playMusic'
 
 function Me(props) {
     const playList=useSelector(state=>state.user.playList)
@@ -23,10 +26,10 @@ function Me(props) {
     const [story,setStory]=useState('')
     const storyRef=useRef(null)
     const [isEditStory,setIsEditStory]=useState(false)
-
+    const [mySong,setMySong]=useState([])
     const auth=getAuth()
     const userInfo=useSelector(userInfor)
-    const dispath=useDispatch()
+    const dispatch=useDispatch()
     const navigate=useNavigate()
 
 
@@ -46,7 +49,7 @@ function Me(props) {
     const handleLogout=()=>{
         signOut(auth).then(() => {
             navigate('/')
-            dispath(setUser({user:null,playList:[]}))
+            dispatch(setUser({user:null,playList:[]}))
         }).catch((error) => {
             console.log(error)
         });
@@ -75,6 +78,23 @@ function Me(props) {
             }).showToast();
         }
     }
+    const handlePlayPlayList=()=>{
+        let playMusic=JSON.parse(localStorage.getItem('playMusic'))
+        let randomNumber=Math.floor(Math.random() * mySong.length);
+        playMusic.currentSong=randomNumber
+        localStorage.setItem('playMusic',JSON.stringify(playMusic))
+        dispatch(setList({
+            playList:mySong,
+            index:randomNumber
+        }))
+    }
+    useEffect(async()=>{
+        const res=await getMySong()
+        console.log(res)
+        if(res.success){
+            setMySong(res.mySong)
+        }
+    },[])
     useEffect(async()=>{
         if(!userInfo){
             return navigate('/not-login')
@@ -82,7 +102,7 @@ function Me(props) {
         if(playList.length===0){
             const data=await getAllPlayList()
             if(data.success){
-                dispath(setPlaylistAction(data.allPlayList))
+                dispatch(setPlaylistAction(data.allPlayList))
             }
         }
     },[userInfo])
@@ -91,6 +111,9 @@ function Me(props) {
         setStory(res.idol.story)
         storyRef.current.innerHTML=newLine(res.idol.story)
     },[])
+    const handleAppendPlaySong=(index)=>{
+        dispatch(appendSongInList(mySong[index]))
+    }
     return (
         <Wrapper>
                 <div className='me-content'>
@@ -145,6 +168,27 @@ function Me(props) {
                     </div>
                 </div>
                 <CreatePlayList open={open} handleClose={handleClose} userInfo={userInfo}/>
+                <div className='my-music'>
+                    <h1 className='play-list-tittle'>
+                        <div className='side-bar-menu-playlist icon' style={{marginRight:10}}>
+                            <BsMusicNoteBeamed className='fs-20'/>
+                        </div>
+                        <span>Nhạc của bạn</span>
+                    </h1>
+                    <div className='btn-play-all' onClick={handlePlayPlayList}>
+                        <BsController className='icon-play'/>
+                        Phát Ngẩu Nhiên tất cả
+                    </div>
+                    <div className='list-song'>
+                        {mySong.length>0?
+                            mySong.map((item,index)=><SongItem data={item} {...item} index={index} key={index} active={-1} handleAppendPlaySong={handleAppendPlaySong}/>):
+                            (<div className='empty-song'>
+                                <BsFillFileEarmarkExcelFill className='icon'/>
+                                Chưa có bài hát nào
+                            </div>)
+                        }
+                    </div>
+                </div>
         </Wrapper>
     );
 }

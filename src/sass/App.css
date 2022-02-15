@@ -227,7 +227,7 @@ input {
   left: 250px;
   right: 0;
   height: 80px;
-  z-index: 2;
+  z-index: 1000;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -264,6 +264,7 @@ input {
       flex-basis: 40%;
   margin-left: 50px;
   position: relative;
+  z-index: 100;
 }
 
 @media only screen and (max-width: 740px) {
@@ -303,6 +304,30 @@ input {
 .nav-bar-menu-search input::placeholder {
   color: #d1cfcf;
   font-size: 14px;
+}
+
+.nav-bar-menu-search .search-sub-menu {
+  position: absolute;
+  top: 35px;
+  left: 0px;
+  width: 100%;
+  background-color: #34495e;
+  padding: 0;
+  margin: 4px;
+}
+
+.nav-bar-menu-search .search-sub-menu li {
+  list-style: none;
+  width: 100%;
+  color: white;
+  padding-inline: 25px;
+  padding-block: 6px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.nav-bar-menu-search .search-sub-menu li:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .nav-bar-menu-search .search-icon {
@@ -1507,6 +1532,45 @@ a {
   font-size: 1rem;
 }
 
+.my-music {
+  margin-top: 50px;
+}
+
+.my-music .icon {
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+}
+
+.my-music .btn-play-all {
+  background-image: -webkit-gradient(linear, left top, right top, from(#D31027), color-stop(51%, #EA384D), to(#D31027));
+  background-image: linear-gradient(to right, #D31027 0%, #EA384D 51%, #D31027 100%);
+}
+
+.my-music .btn-play-all {
+  margin: 10px;
+  padding: 10px 25px;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  -webkit-box-shadow: 0 0 5px #7a7979;
+          box-shadow: 0 0 5px #7a7979;
+  border-radius: 10px;
+  display: block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .play-list-detail .img {
   width: 100%;
   border-radius: 10px;
@@ -1684,9 +1748,47 @@ a {
 }
 
 .idol-tittle {
-  font-size: 35px;
+  font-size: 2rem;
   color: white;
   font-weight: 650;
+}
+
+.idol .story {
+  color: white;
+  width: 60%;
+}
+
+@media only screen and (max-width: 740px) {
+  .idol .story {
+    width: 100%;
+  }
+}
+
+.idol .avatar {
+  border-radius: 50%;
+}
+
+.idol .btn-follow {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 8px 15px;
+  border-radius: 25px;
+  background-color: #7bb9f7;
+  background-image: linear-gradient(62deg, #68a0d8 0%, #E0C3FC 100%);
+  color: white;
+  cursor: pointer;
+}
+
+.idol .quantity-follow {
+  color: white;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 8px 15px;
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin-left: 20px;
 }
 
 @media (max-width: 1024px) {

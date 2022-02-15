@@ -31,6 +31,10 @@ export const upload=(data)=>{
     return axiosClient.post('/me/upload',data)
 }
 
+export const getMySong=()=>{
+    return axiosClient.get('/me/my-song')
+}
+
 export const follow=(data)=>{
     return axiosClient.get(`/me/follow/${data}`)
 }

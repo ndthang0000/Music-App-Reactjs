@@ -36,3 +36,7 @@ export const getRecentlyListSong=(data)=>{
 export const getNation=()=>{
     return axiosClient.get(`/song/nation`)
 }
+
+export const searchSong=(data)=>{
+    return axiosClient.post(`/song/search`,data)
+}
